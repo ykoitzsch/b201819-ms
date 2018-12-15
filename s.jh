@@ -1,0 +1,27 @@
+application {
+  config {
+    baseName test,
+    applicationType microservice,
+    packageName com.jhipster.bachelor.orders,
+    serviceDiscoveryType eureka,
+    authenticationType jwt,
+    cacheProvider hazelcast,
+    serverPort 8081,
+    prodDatabaseType mysql,
+  }
+  entities ProductOrder, Basket
+}
+
+entity ProductOrder {
+	name String
+}
+
+entity Basket {
+	name String	
+}
+
+
+relationship OneToMany{
+	Basket to ProductOrder
+}
+

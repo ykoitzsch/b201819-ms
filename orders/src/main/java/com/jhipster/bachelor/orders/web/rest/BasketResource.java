@@ -45,9 +45,6 @@ public class BasketResource {
     @Timed
     public ResponseEntity<Basket> createBasket(@RequestBody Basket basket) throws URISyntaxException {
         log.debug("REST request to save Basket : {}", basket);
-        if (basket.getId() != null) {
-            throw new BadRequestAlertException("A new basket cannot already have an ID", ENTITY_NAME, "idexists");
-        }
         Basket result = basketService.save(basket);
         return ResponseEntity.created(new URI("/api/baskets/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

@@ -1,5 +1,10 @@
+import { Customer } from './../../shared/model/customers/customer.model';
+import { Basket } from 'app/shared/model/orders/basket.model';
+import { BasketService } from './../../entities/orders/basket/basket.service';
+import { Customer } from 'app/shared/model/customers/customer.model';
+import { CustomerService } from './../../entities/customers/customer/customer.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -36,7 +41,9 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private eventManager: JhiEventManager,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private customerService: CustomerService,
+        private basketService: BasketService
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe(data => {
@@ -70,6 +77,21 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
             if (response.status === 200) {
                 this.error = null;
                 this.success = 'OK';
+                if (isActivated) {
+                    this.customerService.find(user.id).subscribe(
+                        (res: HttpResponse<Customer>) => {
+                            this.alertService.info(
+                                'This User has already been activated once: Customer widh ID ' + user.id + ' exists already!'
+                            );
+                        },
+                        (res: HttpErrorResponse) => {
+                            if (res.status === 404) {
+                                this.customerService.create(new Customer(user.id, user.login, user.email, '')).subscribe();
+                                this.basketService.create(new Basket(user.id, user.id, null)).subscribe();
+                            }
+                        }
+                    );
+                }
                 this.loadAll();
             } else {
                 this.success = null;

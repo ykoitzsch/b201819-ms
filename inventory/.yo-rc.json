@@ -1,0 +1,38 @@
+{
+  "generator-jhipster": {
+    "clientPackageManager": "npm",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "enableHibernateCache": true,
+    "enableSwaggerCodegen": false,
+    "enableTranslation": true,
+    "jhiPrefix": "jhi",
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "messageBroker": false,
+    "nativeLanguage": "en",
+    "packageName": "com.jhipster.bachelor.inventory",
+    "packageFolder": "com/jhipster/bachelor/inventory",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "serviceDiscoveryType": "eureka",
+    "skipClient": true,
+    "testFrameworks": [],
+    "websocket": false,
+    "baseName": "inventory",
+    "applicationType": "microservice",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "serverPort": "8085",
+    "jhipsterVersion": "5.5.0",
+    "buildTool": "maven",
+    "skipUserManagement": true,
+    "jwtSecretKey": "OTQ1NTBkZTgwNzdkNjVhN2U3ZjQ2NWNhYzBkYTI0OTNmZjM3YmE3OTRiYmFmYjRiMDMyYTg2MDgwZWYwMjFkZDU5NTQ2ZjU2ZTIwNDdlNGUxMjMwNmQ5ZDc1NzdhMDRhMjRiODY5NzA5MDQyOWRmY2M3YmU5Mjk3ZTU5MTFlMGE="
+  },
+  "entities": [
+    "Product",
+    "ProductCategory"
+  ]
+}

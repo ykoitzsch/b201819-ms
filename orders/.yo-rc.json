@@ -1,0 +1,39 @@
+{
+  "generator-jhipster": {
+    "clientPackageManager": "npm",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "enableHibernateCache": true,
+    "enableSwaggerCodegen": false,
+    "enableTranslation": true,
+    "jhiPrefix": "jhi",
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "messageBroker": false,
+    "nativeLanguage": "en",
+    "packageName": "com.jhipster.bachelor.orders",
+    "packageFolder": "com/jhipster/bachelor/orders",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "serviceDiscoveryType": "eureka",
+    "skipClient": true,
+    "testFrameworks": [],
+    "websocket": false,
+    "baseName": "orders",
+    "applicationType": "microservice",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "serverPort": "8081",
+    "jhipsterVersion": "5.5.0",
+    "buildTool": "maven",
+    "skipUserManagement": true,
+    "jwtSecretKey": "YTRmYmMzOWUyNDEwNTk1YmU3YWM0NTgwODMzNTgyZWQ1YzhkMzQ4ZjM2MGNjYzU2YjRmMzc0MDQxNDBkZDJiODcyYTUwYWFmZjIyZjZmODZhMjc5YWI1MzhlNjQ5YzVhMWQ0N2FmYTg0YWNlZGZlODdhOWRiOTE0ZTY4NDI4MmM="
+  },
+  "entities": [
+    "ProductOrder",
+    "Basket",
+    "CompleteOrder"
+  ]
+}

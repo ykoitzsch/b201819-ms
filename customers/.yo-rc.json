@@ -1,0 +1,37 @@
+{
+  "generator-jhipster": {
+    "clientPackageManager": "npm",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "enableHibernateCache": true,
+    "enableSwaggerCodegen": false,
+    "enableTranslation": true,
+    "jhiPrefix": "jhi",
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "messageBroker": false,
+    "nativeLanguage": "en",
+    "packageName": "com.jhipster.bachelor.customers",
+    "packageFolder": "com/jhipster/bachelor/customers",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "serviceDiscoveryType": "eureka",
+    "skipClient": true,
+    "testFrameworks": [],
+    "websocket": false,
+    "baseName": "customers",
+    "applicationType": "microservice",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "serverPort": "8084",
+    "jhipsterVersion": "5.5.0",
+    "buildTool": "maven",
+    "skipUserManagement": true,
+    "jwtSecretKey": "ZDUwZmVmZWM4ZGI3ZWIwN2JjZTNiMDE3NzY2M2Y1OTkwZDNiOTMwNTJiZWIyMTA4NTc3OTA3ZjUyMWY1YmE2ZTg4NmVkNDRiZDI4ZjljZGJhZTlhODE2ZDBiZGI5MWU4ZWNmYjY5ZjVjOTJmYzQ5MGM4ZGRjNDNkNTE3ZjAzOTY="
+  },
+  "entities": [
+    "Customer"
+  ]
+}

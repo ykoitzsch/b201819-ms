@@ -1,0 +1,18 @@
+{
+  "generator-jhipster": {
+    "appsFolders": [
+      "customers",
+      "inventory",
+      "invoices",
+      "orders",
+      "ratings",
+      "shop"
+    ],
+    "directoryPath": "../",
+    "gatewayType": "zuul",
+    "monitoring": "no",
+    "serviceDiscoveryType": "eureka",
+    "adminPassword": "admin",
+    "jwtSecretKey": "YzZjZjc5NTIwYTBiZmUwYjhhMzA1MmJhZmYzNjE0ZTM5ODdiNjIzMjFhMjcwZDMxNzQyNmI2MDAzMmNhMDBkMTk5NmIyYTFmOGNkZmY2ZTgwYmVlOTRhZjEwM2I1ZGM0NmI4MQ=="
+  }
+}

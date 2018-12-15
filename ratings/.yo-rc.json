@@ -1,0 +1,37 @@
+{
+  "generator-jhipster": {
+    "clientPackageManager": "npm",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "enableHibernateCache": true,
+    "enableSwaggerCodegen": false,
+    "enableTranslation": true,
+    "jhiPrefix": "jhi",
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "messageBroker": false,
+    "nativeLanguage": "en",
+    "packageName": "com.jhipster.bachelor.ratings",
+    "packageFolder": "com/jhipster/bachelor/ratings",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "serviceDiscoveryType": "eureka",
+    "skipClient": true,
+    "testFrameworks": [],
+    "websocket": false,
+    "baseName": "ratings",
+    "applicationType": "microservice",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "serverPort": "8082",
+    "jhipsterVersion": "5.5.0",
+    "buildTool": "maven",
+    "skipUserManagement": true,
+    "jwtSecretKey": "MjNjOWI1OTI1NWYyY2JiYTQ0MWQwNmI1NGUyYmMxMTcyZjhjODE2NWQyNTA3NTVkODRjNWU3MzNmZDA4MzY4NzNmNjllMzhhOTg4NzVhMTUzNzQwY2QyNTAyYWQwMWUxYzA1OTZmMjI3ZGNmZGVkMGQzNTJiNzkzODAyNTBlZjM="
+  },
+  "entities": [
+    "Rating"
+  ]
+}

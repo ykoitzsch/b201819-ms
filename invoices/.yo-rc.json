@@ -1,0 +1,37 @@
+{
+  "generator-jhipster": {
+    "clientPackageManager": "npm",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "enableHibernateCache": true,
+    "enableSwaggerCodegen": false,
+    "enableTranslation": true,
+    "jhiPrefix": "jhi",
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "messageBroker": false,
+    "nativeLanguage": "en",
+    "packageName": "com.jhipster.bachelor.invoices",
+    "packageFolder": "com/jhipster/bachelor/invoices",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "serviceDiscoveryType": "eureka",
+    "skipClient": true,
+    "testFrameworks": [],
+    "websocket": false,
+    "baseName": "invoices",
+    "applicationType": "microservice",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "serverPort": "8083",
+    "jhipsterVersion": "5.5.0",
+    "buildTool": "maven",
+    "skipUserManagement": true,
+    "jwtSecretKey": "MTBlZDVkN2M4NjAzZDMwOWNlMmY1ZTk1NWYxMTI4MzA3MzJhYzM1MzhhMjQwOWExY2JlMjljYWM2OTMxNzNiNDU4YTEzNTc3OTIyOGQ3ZjcyZDk4MzMzZWRkYjg5NDFkOGJlODE3ZDAwNmIzYTMwNTRiODdiYmY2ZmVlMGU2OGY="
+  },
+  "entities": [
+    "Invoice"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+    "name": "Basket",
+    "fields": [
+        {
+            "fieldName": "customerId",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "productOrder",
+            "otherEntityName": "productOrder",
+            "otherEntityRelationshipName": "basket"
+        }
+    ],
+    "changelogDate": "20181215134303",
+    "entityTableName": "basket",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "shop",
+        "orders"
+    ],
+    "microserviceName": "orders"
+}

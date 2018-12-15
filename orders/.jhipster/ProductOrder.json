@@ -1,0 +1,43 @@
+{
+    "name": "ProductOrder",
+    "fields": [
+        {
+            "fieldName": "amount",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "customerId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "productId",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "completeOrder",
+            "otherEntityName": "completeOrder",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "basket",
+            "otherEntityName": "basket",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181215142943",
+    "entityTableName": "product_order",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "orders"
+    ],
+    "microserviceName": "orders"
+}

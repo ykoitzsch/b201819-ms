@@ -1,0 +1,53 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-product-order-heading">Create or edit a Product Order</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!productOrder.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="productOrder.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_amount">Amount</label>
+                    <input type="number" class="form-control" name="amount" id="field_amount"
+                        [(ngModel)]="productOrder.amount" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_customerId">Customer Id</label>
+                    <input type="number" class="form-control" name="customerId" id="field_customerId"
+                        [(ngModel)]="productOrder.customerId" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_productId">Product Id</label>
+                    <input type="number" class="form-control" name="productId" id="field_productId"
+                        [(ngModel)]="productOrder.productId" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_completeOrder">Complete Order</label>
+                    <select class="form-control" id="field_completeOrder" name="completeOrder" [(ngModel)]="productOrder.completeOrder" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="completeOrderOption.id === productOrder.completeOrder?.id ? productOrder.completeOrder : completeOrderOption" *ngFor="let completeOrderOption of completeorders; trackBy: trackCompleteOrderById">{{completeOrderOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_basket">Basket</label>
+                    <select class="form-control" id="field_basket" name="basket" [(ngModel)]="productOrder.basket" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="basketOption.id === productOrder.basket?.id ? productOrder.basket : basketOption" *ngFor="let basketOption of baskets; trackBy: trackBasketById">{{basketOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

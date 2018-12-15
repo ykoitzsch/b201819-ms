@@ -1,0 +1,47 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="productOrder">
+            <h2><span>Product Order</span> {{productOrder.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Amount</span></dt>
+                <dd>
+                    <span>{{productOrder.amount}}</span>
+                </dd>
+                <dt><span>Customer Id</span></dt>
+                <dd>
+                    <span>{{productOrder.customerId}}</span>
+                </dd>
+                <dt><span>Product Id</span></dt>
+                <dd>
+                    <span>{{productOrder.productId}}</span>
+                </dd>
+                <dt><span>Complete Order</span></dt>
+                <dd>
+                    <div *ngIf="productOrder.completeOrder">
+                        <a [routerLink]="['/complete-order', productOrder.completeOrder?.id, 'view']">{{productOrder.completeOrder?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span>Basket</span></dt>
+                <dd>
+                    <div *ngIf="productOrder.basket">
+                        <a [routerLink]="['/basket', productOrder.basket?.id, 'view']">{{productOrder.basket?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/product-order', productOrder.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

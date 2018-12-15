@@ -1,0 +1,47 @@
+{
+  "generator-jhipster": {
+    "clientPackageManager": "npm",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "enableHibernateCache": true,
+    "enableSwaggerCodegen": false,
+    "enableTranslation": false,
+    "jhiPrefix": "jhi",
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "messageBroker": false,
+    "nativeLanguage": "en",
+    "packageName": "com.jhipster.bachelor.store",
+    "packageFolder": "com/jhipster/bachelor/store",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "serviceDiscoveryType": "eureka",
+    "skipClient": false,
+    "skipServer": false,
+    "testFrameworks": [],
+    "websocket": false,
+    "baseName": "shop",
+    "applicationType": "gateway",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "jhipsterVersion": "5.5.0",
+    "buildTool": "maven",
+    "skipUserManagement": false,
+    "serverPort": "8080",
+    "clientFramework": "angularX",
+    "useSass": true,
+    "jwtSecretKey": "MjNiYmY5Nzc5MDlhNDUwMTBhNDVmN2Y3ZTRmN2QyZDljY2Y4YzMwZTk1MWRmZGI3MzJlMmViYWNjMDhjZjFiMWQzMWZiMTNmNjEwZDkwMWY0N2M4OTQyZWY0MDIwZjZjZjIzY2NmMzRhYTIyYzkyN2MwOTgxZjM5NGZhZGVjZGY="
+  },
+  "entities": [
+    "Customer",
+    "Product",
+    "ProductCategory",
+    "CompleteOrder",
+    "ProductOrder",
+    "Basket",
+    "Rating",
+    "Invoice"
+  ]
+}

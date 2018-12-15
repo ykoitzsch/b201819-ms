@@ -1,0 +1,47 @@
+{
+    "name": "CompleteOrder",
+    "fields": [
+        {
+            "fieldName": "invoiceId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "OrderStatus",
+            "fieldValues": "COMPLETED,PENDING,CANELLED"
+        },
+        {
+            "fieldName": "customerId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "totalPrice",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "orderDate",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "productOrder",
+            "otherEntityName": "productOrder",
+            "otherEntityRelationshipName": "completeOrder"
+        }
+    ],
+    "changelogDate": "20181215134301",
+    "entityTableName": "complete_order",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "shop",
+        "orders"
+    ],
+    "microserviceName": "orders"
+}

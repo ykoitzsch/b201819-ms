@@ -10,7 +10,7 @@ import {
     CustomerDeleteDialogComponent,
     customerRoute,
     customerPopupRoute
-} from './';
+} from '.';
 
 const ENTITY_STATES = [...customerRoute, ...customerPopupRoute];
 

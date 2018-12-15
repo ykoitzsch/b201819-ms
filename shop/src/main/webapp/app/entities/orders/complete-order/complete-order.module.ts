@@ -10,7 +10,7 @@ import {
     CompleteOrderDeleteDialogComponent,
     completeOrderRoute,
     completeOrderPopupRoute
-} from './';
+} from '.';
 
 const ENTITY_STATES = [...completeOrderRoute, ...completeOrderPopupRoute];
 

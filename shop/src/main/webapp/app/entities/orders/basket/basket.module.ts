@@ -10,7 +10,7 @@ import {
     BasketDeleteDialogComponent,
     basketRoute,
     basketPopupRoute
-} from './';
+} from '.';
 
 const ENTITY_STATES = [...basketRoute, ...basketPopupRoute];
 

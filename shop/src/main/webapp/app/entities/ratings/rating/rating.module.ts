@@ -10,7 +10,7 @@ import {
     RatingDeleteDialogComponent,
     ratingRoute,
     ratingPopupRoute
-} from './';
+} from '.';
 
 const ENTITY_STATES = [...ratingRoute, ...ratingPopupRoute];
 

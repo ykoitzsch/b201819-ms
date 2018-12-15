@@ -10,7 +10,7 @@ import {
     ProductCategoryDeleteDialogComponent,
     productCategoryRoute,
     productCategoryPopupRoute
-} from './';
+} from '.';
 
 const ENTITY_STATES = [...productCategoryRoute, ...productCategoryPopupRoute];
 

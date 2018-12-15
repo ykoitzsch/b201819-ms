@@ -8,9 +8,10 @@ import {
     ProductUpdateComponent,
     ProductDeletePopupComponent,
     ProductDeleteDialogComponent,
+    ProductShopComponent,
     productRoute,
     productPopupRoute
-} from './';
+} from '.';
 
 const ENTITY_STATES = [...productRoute, ...productPopupRoute];
 
@@ -21,9 +22,16 @@ const ENTITY_STATES = [...productRoute, ...productPopupRoute];
         ProductDetailComponent,
         ProductUpdateComponent,
         ProductDeleteDialogComponent,
-        ProductDeletePopupComponent
+        ProductDeletePopupComponent,
+        ProductShopComponent
     ],
-    entryComponents: [ProductComponent, ProductUpdateComponent, ProductDeleteDialogComponent, ProductDeletePopupComponent],
+    entryComponents: [
+        ProductComponent,
+        ProductUpdateComponent,
+        ProductDeleteDialogComponent,
+        ProductDeletePopupComponent,
+        ProductShopComponent
+    ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ShopProductModule {}

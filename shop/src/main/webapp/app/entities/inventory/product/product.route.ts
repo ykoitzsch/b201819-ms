@@ -1,3 +1,4 @@
+import { ProductShopComponent } from './product-shop.component';
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
@@ -62,6 +63,18 @@ export const productRoute: Routes = [
     {
         path: 'product/:id/edit',
         component: ProductUpdateComponent,
+        resolve: {
+            product: ProductResolve
+        },
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Products'
+        },
+        canActivate: [UserRouteAccessService]
+    },
+    {
+        path: 'product2',
+        component: ProductShopComponent,
         resolve: {
             product: ProductResolve
         },

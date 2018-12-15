@@ -45,9 +45,6 @@ public class CustomerResource {
     @Timed
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) throws URISyntaxException {
         log.debug("REST request to save Customer : {}", customer);
-        if (customer.getId() != null) {
-            throw new BadRequestAlertException("A new customer cannot already have an ID", ENTITY_NAME, "idexists");
-        }
         Customer result = customerService.save(customer);
         return ResponseEntity.created(new URI("/api/customers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

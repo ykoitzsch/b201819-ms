@@ -38,16 +38,15 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20181215134259",
+    "changelogDate": "20181215203832",
     "entityTableName": "product",
     "dto": "no",
     "pagination": "no",
     "service": "serviceClass",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
-    "clientRootFolder": "",
+    "clientRootFolder": "inventory",
     "applications": [
-        "shop",
         "inventory"
     ],
     "microserviceName": "inventory"

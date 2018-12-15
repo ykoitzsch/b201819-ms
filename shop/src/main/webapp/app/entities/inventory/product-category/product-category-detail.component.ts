@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { IProductCategory } from 'app/shared/model/ivnentory/product-category.model';
+import { IProductCategory } from 'app/shared/model/inventory/product-category.model';
 
 @Component({
     selector: 'jhi-product-category-detail',

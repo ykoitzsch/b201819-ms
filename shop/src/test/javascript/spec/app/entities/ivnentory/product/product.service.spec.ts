@@ -4,8 +4,8 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { take, map } from 'rxjs/operators';
-import { ProductService } from 'app/entities/ivnentory/product/product.service';
-import { IProduct, Product } from 'app/shared/model/ivnentory/product.model';
+import { ProductService } from 'app/entities/inventory/product/product.service';
+import { IProduct, Product } from 'app/shared/model/inventory/product.model';
 
 describe('Service Tests', () => {
     describe('Product Service', () => {

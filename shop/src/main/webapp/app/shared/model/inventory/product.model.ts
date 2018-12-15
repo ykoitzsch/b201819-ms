@@ -1,4 +1,4 @@
-import { IProductCategory } from 'app/shared/model/ivnentory/product-category.model';
+import { IProductCategory } from 'app/shared/model/inventory/product-category.model';
 
 export interface IProduct {
     id?: number;

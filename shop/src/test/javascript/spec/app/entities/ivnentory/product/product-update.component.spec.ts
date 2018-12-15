@@ -4,9 +4,9 @@ import { HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 import { ShopTestModule } from '../../../../test.module';
-import { ProductUpdateComponent } from 'app/entities/ivnentory/product/product-update.component';
-import { ProductService } from 'app/entities/ivnentory/product/product.service';
-import { Product } from 'app/shared/model/ivnentory/product.model';
+import { ProductUpdateComponent } from 'app/entities/inventory/product/product-update.component';
+import { ProductService } from 'app/entities/inventory/product/product.service';
+import { Product } from 'app/shared/model/inventory/product.model';
 
 describe('Component Tests', () => {
     describe('Product Management Update Component', () => {

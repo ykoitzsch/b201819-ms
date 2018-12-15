@@ -4,13 +4,13 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@a
 import { UserRouteAccessService } from 'app/core';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ProductCategory } from 'app/shared/model/ivnentory/product-category.model';
+import { ProductCategory } from 'app/shared/model/inventory/product-category.model';
 import { ProductCategoryService } from './product-category.service';
 import { ProductCategoryComponent } from './product-category.component';
 import { ProductCategoryDetailComponent } from './product-category-detail.component';
 import { ProductCategoryUpdateComponent } from './product-category-update.component';
 import { ProductCategoryDeletePopupComponent } from './product-category-delete-dialog.component';
-import { IProductCategory } from 'app/shared/model/ivnentory/product-category.model';
+import { IProductCategory } from 'app/shared/model/inventory/product-category.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductCategoryResolve implements Resolve<IProductCategory> {

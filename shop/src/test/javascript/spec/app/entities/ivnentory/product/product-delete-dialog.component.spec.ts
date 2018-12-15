@@ -5,8 +5,8 @@ import { Observable, of } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { ShopTestModule } from '../../../../test.module';
-import { ProductDeleteDialogComponent } from 'app/entities/ivnentory/product/product-delete-dialog.component';
-import { ProductService } from 'app/entities/ivnentory/product/product.service';
+import { ProductDeleteDialogComponent } from 'app/entities/inventory/product/product-delete-dialog.component';
+import { ProductService } from 'app/entities/inventory/product/product.service';
 
 describe('Component Tests', () => {
     describe('Product Management Delete Component', () => {

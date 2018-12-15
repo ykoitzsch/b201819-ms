@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { IProductCategory } from 'app/shared/model/ivnentory/product-category.model';
+import { IProductCategory } from 'app/shared/model/inventory/product-category.model';
 import { ProductCategoryService } from './product-category.service';
 
 @Component({

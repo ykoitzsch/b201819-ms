@@ -4,10 +4,10 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { JhiAlertService } from 'ng-jhipster';
 
-import { IProduct } from 'app/shared/model/ivnentory/product.model';
+import { IProduct } from 'app/shared/model/inventory/product.model';
 import { ProductService } from './product.service';
-import { IProductCategory } from 'app/shared/model/ivnentory/product-category.model';
-import { ProductCategoryService } from 'app/entities/ivnentory/product-category';
+import { IProductCategory } from 'app/shared/model/inventory/product-category.model';
+import { ProductCategoryService } from 'app/entities/inventory/product-category';
 
 @Component({
     selector: 'jhi-product-update',

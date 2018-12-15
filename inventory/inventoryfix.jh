@@ -1,0 +1,33 @@
+application {
+  config {
+    baseName inventory,
+    applicationType microservice,
+    packageName com.jhipster.bachelor.inventory,
+    serviceDiscoveryType eureka,
+    authenticationType jwt,
+    cacheProvider hazelcast,
+    serverPort 8085,
+    prodDatabaseType mysql,
+  }
+  entities Product, ProductCategory
+}
+
+entity Product {
+    name String required
+    description String
+    price Double required min(0)
+    image String
+    productOrderId Long
+}
+
+entity ProductCategory {
+    name String required
+}
+
+service Product, ProductCategory with serviceClass
+microservice Product, ProductCategory with inventory
+
+relationship ManyToOne{
+	Product to ProductCategory
+}
+

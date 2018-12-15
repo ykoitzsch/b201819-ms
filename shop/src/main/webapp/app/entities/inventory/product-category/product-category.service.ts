@@ -4,14 +4,14 @@ import { Observable } from 'rxjs';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
-import { IProductCategory } from 'app/shared/model/ivnentory/product-category.model';
+import { IProductCategory } from 'app/shared/model/inventory/product-category.model';
 
 type EntityResponseType = HttpResponse<IProductCategory>;
 type EntityArrayResponseType = HttpResponse<IProductCategory[]>;
 
 @Injectable({ providedIn: 'root' })
 export class ProductCategoryService {
-    public resourceUrl = SERVER_API_URL + 'ivnentory/api/product-categories';
+    public resourceUrl = SERVER_API_URL + 'inventory/api/product-categories';
 
     constructor(private http: HttpClient) {}
 

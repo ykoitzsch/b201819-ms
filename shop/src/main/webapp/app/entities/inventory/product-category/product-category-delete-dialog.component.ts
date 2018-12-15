@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { IProductCategory } from 'app/shared/model/ivnentory/product-category.model';
+import { IProductCategory } from 'app/shared/model/inventory/product-category.model';
 import { ProductCategoryService } from './product-category.service';
 
 @Component({

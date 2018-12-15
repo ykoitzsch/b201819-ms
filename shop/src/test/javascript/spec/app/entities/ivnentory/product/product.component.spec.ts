@@ -4,9 +4,9 @@ import { Observable, of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { ShopTestModule } from '../../../../test.module';
-import { ProductComponent } from 'app/entities/ivnentory/product/product.component';
-import { ProductService } from 'app/entities/ivnentory/product/product.service';
-import { Product } from 'app/shared/model/ivnentory/product.model';
+import { ProductComponent } from 'app/entities/inventory/product/product.component';
+import { ProductService } from 'app/entities/inventory/product/product.service';
+import { Product } from 'app/shared/model/inventory/product.model';
 
 describe('Component Tests', () => {
     describe('Product Management Component', () => {

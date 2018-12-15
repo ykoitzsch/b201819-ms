@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 import { ShopTestModule } from '../../../../test.module';
-import { ProductDetailComponent } from 'app/entities/ivnentory/product/product-detail.component';
-import { Product } from 'app/shared/model/ivnentory/product.model';
+import { ProductDetailComponent } from 'app/entities/inventory/product/product-detail.component';
+import { Product } from 'app/shared/model/inventory/product.model';
 
 describe('Component Tests', () => {
     describe('Product Management Detail Component', () => {

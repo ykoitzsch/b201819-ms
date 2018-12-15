@@ -3,7 +3,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { IProduct } from 'app/shared/model/ivnentory/product.model';
+import { IProduct } from 'app/shared/model/inventory/product.model';
 import { Principal } from 'app/core';
 import { ProductService } from './product.service';
 

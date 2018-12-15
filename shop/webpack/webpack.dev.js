@@ -21,7 +21,7 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
         proxy: [{
             context: [
                 '/customers',
-                '/ivnentory',
+                '/inventory',
                 '/orders',
                 '/ratings',
                 '/invoices',

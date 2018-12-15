@@ -1,4 +1,3 @@
-import { Customer } from './../../shared/model/customers/customer.model';
 import { Basket } from 'app/shared/model/orders/basket.model';
 import { BasketService } from './../../entities/orders/basket/basket.service';
 import { Customer } from 'app/shared/model/customers/customer.model';

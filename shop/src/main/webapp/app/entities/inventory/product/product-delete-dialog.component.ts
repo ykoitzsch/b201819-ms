@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { IProduct } from 'app/shared/model/ivnentory/product.model';
+import { IProduct } from 'app/shared/model/inventory/product.model';
 import { ProductService } from './product.service';
 
 @Component({

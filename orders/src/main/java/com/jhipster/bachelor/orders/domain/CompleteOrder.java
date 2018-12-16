@@ -43,7 +43,7 @@ public class CompleteOrder implements Serializable {
     @Column(name = "order_date")
     private String orderDate;
 
-    @OneToMany(mappedBy = "completeOrder")
+    @OneToMany(mappedBy = "completeOrder", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ProductOrder> productOrders = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

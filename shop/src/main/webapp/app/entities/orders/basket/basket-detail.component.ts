@@ -71,6 +71,8 @@ export class BasketDetailComponent implements OnInit {
                 .subscribe(
                     (res: HttpResponse<CompleteOrder>) => {
                         this.products = [];
+                        this.totalProducts = 0;
+                        this.totalPrice = 0.0;
                     },
                     (res: HttpErrorResponse) => {
                         console.log(res);

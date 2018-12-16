@@ -47,15 +47,11 @@ public class CompleteOrderService {
         CompleteOrder result;
         Optional<Basket> optBasket = basketRepository.findById(completeOrder.getCustomerId());
         if(optBasket.isPresent()) {
-        	log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        	log.info("debug1");
         	Basket basket = optBasket.get();
         	basket.getProductOrders().clear();
         	this.basketRepository.save(basket); //clear basket
         	result = completeOrderRepository.save(completeOrder);
-        	log.info("debug2");
         	completeOrder.getProductOrders().forEach(p -> {
-            	log.info("debug3");
         		p.setBasket(null);
         		p.setCompleteOrder(completeOrder);
         		this.productOrderService.save(p);

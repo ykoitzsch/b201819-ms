@@ -1,3 +1,5 @@
+import { RatingService } from './../../ratings/rating/rating.service';
+import { Rating } from './../../../shared/model/ratings/rating.model';
 import { JhiAlertService } from 'ng-jhipster';
 import { Basket } from 'app/shared/model/orders/basket.model';
 import { AccountService } from '../../../core/auth/account.service';
@@ -18,12 +20,14 @@ export class ProductDetailComponent implements OnInit {
     amount: number;
     account: Account;
     basket: Basket;
+    ratings: Rating[];
 
     constructor(
         private activatedRoute: ActivatedRoute,
         private accountService: AccountService,
         private basketService: BasketService,
-        private jhiAlertService: JhiAlertService
+        private jhiAlertService: JhiAlertService,
+        private ratingService: RatingService
     ) {}
 
     ngOnInit() {
@@ -31,6 +35,7 @@ export class ProductDetailComponent implements OnInit {
             this.product = product;
             this.amount = 1;
         });
+        this.loadRatings();
     }
 
     previousState() {
@@ -58,5 +63,16 @@ export class ProductDetailComponent implements OnInit {
                 );
             }
         });
+    }
+
+    loadRatings() {
+        this.ratingService.query().subscribe(
+            (res: HttpResponse<Rating[]>) => {
+                this.ratings = res.body;
+            },
+            (res: HttpErrorResponse) => {
+                this.jhiAlertService.error('Rating Service is at the moment not available');
+            }
+        );
     }
 }

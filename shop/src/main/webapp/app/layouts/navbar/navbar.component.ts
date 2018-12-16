@@ -5,6 +5,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { VERSION } from 'app/app.constants';
 import { Principal, LoginModalService, LoginService } from 'app/core';
 import { ProfileService } from '../profiles/profile.service';
+import { AccountService } from '../../core/auth/account.service';
 
 @Component({
     selector: 'jhi-navbar',
@@ -18,13 +19,15 @@ export class NavbarComponent implements OnInit {
     swaggerEnabled: boolean;
     modalRef: NgbModalRef;
     version: string;
+    userSpecificBasketId: number;
 
     constructor(
         private loginService: LoginService,
         private principal: Principal,
         private loginModalService: LoginModalService,
         private profileService: ProfileService,
-        private router: Router
+        private router: Router,
+        private accountService: AccountService
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
@@ -34,6 +37,7 @@ export class NavbarComponent implements OnInit {
         this.profileService.getProfileInfo().then(profileInfo => {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
+            this.accountService.get().subscribe(res => (this.userSpecificBasketId = +res.body.id));
         });
     }
 

@@ -39,11 +39,11 @@ public class CompleteOrderResource {
      *
      * @param completeOrder the completeOrder to create
      * @return the ResponseEntity with status 201 (Created) and with body the new completeOrder, or with status 400 (Bad Request) if the completeOrder has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @throws Exception 
      */
     @PostMapping("/complete-orders")
     @Timed
-    public ResponseEntity<CompleteOrder> createCompleteOrder(@RequestBody CompleteOrder completeOrder) throws URISyntaxException {
+    public ResponseEntity<CompleteOrder> createCompleteOrder(@RequestBody CompleteOrder completeOrder) throws Exception {
         log.debug("REST request to save CompleteOrder : {}", completeOrder);
         if (completeOrder.getId() != null) {
             throw new BadRequestAlertException("A new completeOrder cannot already have an ID", ENTITY_NAME, "idexists");
@@ -61,11 +61,11 @@ public class CompleteOrderResource {
      * @return the ResponseEntity with status 200 (OK) and with body the updated completeOrder,
      * or with status 400 (Bad Request) if the completeOrder is not valid,
      * or with status 500 (Internal Server Error) if the completeOrder couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @throws Exception 
      */
     @PutMapping("/complete-orders")
     @Timed
-    public ResponseEntity<CompleteOrder> updateCompleteOrder(@RequestBody CompleteOrder completeOrder) throws URISyntaxException {
+    public ResponseEntity<CompleteOrder> updateCompleteOrder(@RequestBody CompleteOrder completeOrder) throws Exception {
         log.debug("REST request to update CompleteOrder : {}", completeOrder);
         if (completeOrder.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

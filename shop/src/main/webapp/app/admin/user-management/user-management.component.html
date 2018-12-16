@@ -32,7 +32,6 @@
                     <button class="btn btn-success btn-sm" (click)="setActive(user, false)" *ngIf="user.activated"
                             [disabled]="currentAccount.login === user.login">Activated</button>
                 </td>
-                
                 <td>
                     <div *ngFor="let authority of user.authorities">
                         <span class="badge badge-info">{{ authority }}</span>

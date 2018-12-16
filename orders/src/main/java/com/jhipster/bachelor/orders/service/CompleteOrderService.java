@@ -1,7 +1,12 @@
 package com.jhipster.bachelor.orders.service;
 
+import com.jhipster.bachelor.orders.domain.Basket;
 import com.jhipster.bachelor.orders.domain.CompleteOrder;
+import com.jhipster.bachelor.orders.repository.BasketRepository;
 import com.jhipster.bachelor.orders.repository.CompleteOrderRepository;
+import com.jhipster.bachelor.orders.repository.ProductOrderRepository;
+import com.jhipster.bachelor.orders.web.rest.errors.BadRequestAlertException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,9 +26,13 @@ public class CompleteOrderService {
     private final Logger log = LoggerFactory.getLogger(CompleteOrderService.class);
 
     private CompleteOrderRepository completeOrderRepository;
+    private BasketRepository basketRepository;
+    private ProductOrderService productOrderService;
 
-    public CompleteOrderService(CompleteOrderRepository completeOrderRepository) {
+    public CompleteOrderService(CompleteOrderRepository completeOrderRepository, BasketRepository basketRepository, ProductOrderService productOrderService) {
         this.completeOrderRepository = completeOrderRepository;
+        this.basketRepository = basketRepository;
+        this.productOrderService = productOrderService;
     }
 
     /**
@@ -31,10 +40,30 @@ public class CompleteOrderService {
      *
      * @param completeOrder the entity to save
      * @return the persisted entity
+     * @throws Exception 
      */
-    public CompleteOrder save(CompleteOrder completeOrder) {
+    public CompleteOrder save(CompleteOrder completeOrder) throws Exception {
         log.debug("Request to save CompleteOrder : {}", completeOrder);
-        return completeOrderRepository.save(completeOrder);
+        CompleteOrder result;
+        Optional<Basket> optBasket = basketRepository.findById(completeOrder.getCustomerId());
+        if(optBasket.isPresent()) {
+        	log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        	log.info("debug1");
+        	Basket basket = optBasket.get();
+        	basket.getProductOrders().clear();
+        	this.basketRepository.save(basket); //clear basket
+        	result = completeOrderRepository.save(completeOrder);
+        	log.info("debug2");
+        	completeOrder.getProductOrders().forEach(p -> {
+            	log.info("debug3");
+        		p.setBasket(null);
+        		p.setCompleteOrder(completeOrder);
+        		this.productOrderService.save(p);
+        	});
+        }
+        else throw new Exception("Basket with ID " + completeOrder.getCustomerId() + " does not exist");
+             
+        return result;
     }
 
     /**

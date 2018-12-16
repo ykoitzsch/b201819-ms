@@ -73,14 +73,14 @@ export const productRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'product2',
+        path: 'shop',
         component: ProductShopComponent,
         resolve: {
             product: ProductResolve
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'Products'
+            pageTitle: 'Shop'
         },
         canActivate: [UserRouteAccessService]
     }

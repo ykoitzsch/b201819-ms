@@ -45,6 +45,7 @@ export class ProductUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+        this.product.image = 'https://via.placeholder.com/250?text=' + this.product.name;
         if (this.product.id !== undefined) {
             this.subscribeToSaveResponse(this.productService.update(this.product));
         } else {

@@ -27,7 +27,7 @@ public class Basket implements Serializable {
     @Column(name = "customer_id")
     private Long customerId;
 
-    @OneToMany(mappedBy = "basket")
+    @OneToMany(mappedBy = "basket", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ProductOrder> productOrders = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

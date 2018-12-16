@@ -1,62 +1,24 @@
 <div>
     <h2 id="page-heading">
-        <span>Products</span>
+        <span>Shop</span>
     </h2>
     <jhi-alert></jhi-alert>
     <br/>
-    <div class="table-responsive" *ngIf="products">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Name</span></th>
-            <th><span>Description</span></th>
-            <th><span>Price</span></th>
-            <th><span>Image</span></th>
-            <th><span>Product Order Id</span></th>
-            <th><span>Product Category</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let product of products ;trackBy: trackId">
-                <td><a [routerLink]="['/product', product.id, 'view' ]">{{product.id}}</a></td>
-                <td>{{product.name}}</td>
-                <td>{{product.description}}</td>
-                <td>{{product.price}}</td>
-                <td>{{product.image}}</td>
-                <td>{{product.productOrderId}}</td>
-                <td>
-                    <div *ngIf="product.productCategory">
-                        <a [routerLink]="['../product-category', product.productCategory?.id, 'view' ]" >{{product.productCategory?.id}}</a>
-                    </div>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['/product', product.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/product', product.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'product/'+ product.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div *ngIf="products">
+        <div *ngFor="let product of products; trackBy: trackId">
+            <div class="card" style="width: 12%; float:left; margin: 5px">
+                <img class="card-img-top" [src]="product.image" alt="alt text">
+                <h5 class="card-header">{{ product.name }}</h5>
+                <div class="card-body">
+                    <p class="card-text small text-danger"><a>{{ product.productCategory.name }}</a></p>
+                    <p class="card-text" style="text-align: left"><b>{{ product.price }} €</b></p>
+                    <button type="button"
+                            [routerLink]="['/product', product.id, 'view']"
+                            class="btn btn-primary btn-block btn-sm">
+                            <span>Check Details</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

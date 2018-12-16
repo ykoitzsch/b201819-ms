@@ -45,7 +45,8 @@ import {
     faMoneyBill,
     faTrash,
     faStar,
-    faSmile
+    faSmile,
+    faAngleRight
 } from '@fortawesome/free-solid-svg-icons';
 
 // Adds the SVG icon to the library so you can use it in your page
@@ -89,5 +90,6 @@ library.add(faTrash);
 library.add(faStar);
 library.add(faSmile);
 library.add(faMoneyBill);
+library.add(faAngleRight);
 
 // jhipster-needle-add-element-to-vendor - JHipster will add new menu items here

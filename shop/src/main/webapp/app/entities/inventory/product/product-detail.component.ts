@@ -1,13 +1,13 @@
 import { JhiAlertService } from 'ng-jhipster';
 import { Basket } from 'app/shared/model/orders/basket.model';
-import { AccountService } from './../../../core/auth/account.service';
-import { ProductOrder } from './../../../shared/model/orders/product-order.model';
+import { AccountService } from '../../../core/auth/account.service';
+import { ProductOrder } from '../../../shared/model/orders/product-order.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { IProduct } from 'app/shared/model/inventory/product.model';
 import { BasketService } from '../../orders/basket';
-import { HttpResponse, HttpErrorResponse } from '../../../../../../../node_modules/@angular/common/http';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'jhi-product-detail',

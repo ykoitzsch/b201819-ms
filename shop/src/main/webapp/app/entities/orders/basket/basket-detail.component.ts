@@ -1,15 +1,15 @@
 import { AccountService } from 'app/core';
-import { CompleteOrderService } from './../complete-order/complete-order.service';
+import { CompleteOrderService } from '../complete-order/complete-order.service';
 import { CompleteOrder } from 'app/shared/model/orders/complete-order.model';
 import { BasketService } from 'app/entities/orders/basket';
-import { ProductOrder } from './../../../shared/model/orders/product-order.model';
+import { ProductOrder } from '../../../shared/model/orders/product-order.model';
 import { JhiAlertService } from 'ng-jhipster';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { IBasket } from 'app/shared/model/orders/basket.model';
 import { ProductService, ProductDeletePopupComponent } from '../../inventory/product';
-import { HttpResponse, HttpErrorResponse } from '../../../../../../../node_modules/@angular/common/http';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Product } from '../../../shared/model/inventory/product.model';
 import { OrderStatus } from '../../../shared/model/orders/complete-order.model';
 

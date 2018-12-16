@@ -9,7 +9,8 @@ import {
     CompleteOrderDeletePopupComponent,
     CompleteOrderDeleteDialogComponent,
     completeOrderRoute,
-    completeOrderPopupRoute
+    completeOrderPopupRoute,
+    CompleteOrderOverviewComponent
 } from '.';
 
 const ENTITY_STATES = [...completeOrderRoute, ...completeOrderPopupRoute];
@@ -21,13 +22,15 @@ const ENTITY_STATES = [...completeOrderRoute, ...completeOrderPopupRoute];
         CompleteOrderDetailComponent,
         CompleteOrderUpdateComponent,
         CompleteOrderDeleteDialogComponent,
-        CompleteOrderDeletePopupComponent
+        CompleteOrderDeletePopupComponent,
+        CompleteOrderOverviewComponent
     ],
     entryComponents: [
         CompleteOrderComponent,
         CompleteOrderUpdateComponent,
         CompleteOrderDeleteDialogComponent,
-        CompleteOrderDeletePopupComponent
+        CompleteOrderDeletePopupComponent,
+        CompleteOrderOverviewComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

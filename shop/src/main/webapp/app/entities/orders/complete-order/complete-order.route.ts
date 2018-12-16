@@ -1,3 +1,4 @@
+import { CompleteOrderOverviewComponent } from './complete-order-overview.component';
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
@@ -32,6 +33,15 @@ export const completeOrderRoute: Routes = [
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'CompleteOrders'
+        },
+        canActivate: [UserRouteAccessService]
+    },
+    {
+        path: 'my-orders',
+        component: CompleteOrderOverviewComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'MyOrders'
         },
         canActivate: [UserRouteAccessService]
     },

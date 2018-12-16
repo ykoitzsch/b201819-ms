@@ -1,0 +1,62 @@
+<div>
+    <h2 id="page-heading">
+        <span>Complete Orders</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-complete-order" [routerLink]="['/complete-order/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Complete Order
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="completeOrders">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Invoice Id</span></th>
+            <th><span>Status</span></th>
+            <th><span>Customer Id</span></th>
+            <th><span>Total Price</span></th>
+            <th><span>Order Date</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let completeOrder of completeOrders ;trackBy: trackId">
+                <td><a [routerLink]="['/complete-order', completeOrder.id, 'view' ]">{{completeOrder.id}}</a></td>
+                <td>{{completeOrder.invoiceId}}</td>
+                <td>{{completeOrder.status}}</td>
+                <td>{{completeOrder.customerId}}</td>
+                <td>{{completeOrder.totalPrice}}</td>
+                <td>{{completeOrder.orderDate}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/complete-order', completeOrder.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/complete-order', completeOrder.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'complete-order/'+ completeOrder.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

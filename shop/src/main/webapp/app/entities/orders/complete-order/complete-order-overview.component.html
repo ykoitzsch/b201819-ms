@@ -6,7 +6,7 @@
         <jhi-alert></jhi-alert>
         <br/>
         <div *ngFor="let c of completeOrders" class="mb-4">
-            <div class="card">
+            <div class="card" *ngIf="c.customerId === currentAccount.id">
                 <div class="card-header">
                     <div class="row">
                         <div class="col">Order date</div>
@@ -42,7 +42,7 @@
                             </button>
                             <br>
                             <button type="submit"
-                                    (click)="hide(o)"
+                                    routerLink="/invoice"
                                     [disabled]="c.status === 'PENDING'"
                                     class="btn btn-primary btn-block">
                                     <fa-icon [icon]="'file-invoice'"></fa-icon>&nbsp;<span> Invoice</span>

@@ -56,22 +56,24 @@
             </div>
 
             <div *ngFor="let r of ratings">
-                <div class="row mt-5">
-                    <div class="col-1"><img src="https://via.placeholder.com/75?text=User"></div>
-                    <div class="col-1 h6 align-left">
-                        <p>User {{ r.customerId }}</p>
-                        <p class="small">Rated {{ r.points }}/10</p>
+                <div *ngIf="r.productId === product.id">
+                    <div class="row mt-5">
+                        <div class="col-1"><img src="https://via.placeholder.com/75?text=User"></div>
+                        <div class="col-1 h6 align-left">
+                            <p>User {{ r.customerId }}</p>
+                            <p class="small">Rated {{ r.points }}/10</p>
+                        </div>
                     </div>
+                    <div class="row" >
+                        <div class="col" *ngIf="r.description.length === 0">
+                            <i><p>This customer did not leave a description.</p></i>
+                        </div>
+                        <div class="col" *ngIf="r.description.length > 0">
+                            <i><p>{{ r.description }}</p></i>
+                        </div>
+                    </div>
+                    <hr>
                 </div>
-                <div class="row" >
-                    <div class="col" *ngIf="r.description.length === 0">
-                        <i><p>This customer did not leave a description.</p></i>
-                    </div>
-                    <div class="col" *ngIf="r.description.length > 0">
-                        <i><p>{{ r.description }}</p></i>
-                    </div>
-                </div>
-                <hr>
             </div>
             <br>
             <div *ngIf="!customerRatedAlready">

@@ -1,3 +1,5 @@
+import { InvoiceService } from './../../invoices/invoice/invoice.service';
+import { Invoice, InvoiceStatus } from './../../../shared/model/invoices/invoice.model';
 import { Product } from 'app/shared/model/inventory/product.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
@@ -19,13 +21,15 @@ export class CompleteOrderOverviewComponent implements OnInit, OnDestroy {
     currentAccount: any;
     eventSubscriber: Subscription;
     products: Product[];
+    invoice: Invoice;
 
     constructor(
         private completeOrderService: CompleteOrderService,
         private jhiAlertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private principal: Principal,
-        private productService: ProductService
+        private productService: ProductService,
+        private invoiceService: InvoiceService
     ) {}
 
     loadAll() {
@@ -74,6 +78,18 @@ export class CompleteOrderOverviewComponent implements OnInit, OnDestroy {
                 order.status = OrderStatus.PENDING;
             }
         );
+        console.log('okay');
+        this.invoice = new Invoice();
+        this.invoice.amount = order.totalPrice;
+        this.invoice.code = 'INVOICECODE';
+        this.invoice.customerId = order.customerId;
+        this.invoice.dueDate = '01.01.2019';
+        this.invoice.orderId = order.id;
+        this.invoice.paymentDate = Date();
+        this.invoice.status = InvoiceStatus.PAID;
+        this.invoiceService.create(this.invoice).subscribe(r => {
+            console.log(r);
+        });
     }
 
     hide(order) {

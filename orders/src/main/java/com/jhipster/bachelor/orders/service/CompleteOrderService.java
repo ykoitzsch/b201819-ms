@@ -5,6 +5,7 @@ import com.jhipster.bachelor.orders.domain.CompleteOrder;
 import com.jhipster.bachelor.orders.repository.BasketRepository;
 import com.jhipster.bachelor.orders.repository.CompleteOrderRepository;
 import com.jhipster.bachelor.orders.repository.ProductOrderRepository;
+import com.jhipster.bachelor.orders.security.SecurityUtils;
 import com.jhipster.bachelor.orders.web.rest.errors.BadRequestAlertException;
 
 import org.slf4j.Logger;

@@ -1,3 +1,4 @@
+import { MyBasketComponent } from './my-basket.component';
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
@@ -32,6 +33,15 @@ export const basketRoute: Routes = [
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'Baskets'
+        },
+        canActivate: [UserRouteAccessService]
+    },
+    {
+        path: 'my-basket',
+        component: MyBasketComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'My Basket'
         },
         canActivate: [UserRouteAccessService]
     },

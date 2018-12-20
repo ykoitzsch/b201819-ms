@@ -35,7 +35,7 @@
                 </a>
             </li>
              <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngSwitchCase="true">
-                <a class="nav-link" [routerLink]="['/basket/', userSpecificBasketId, 'view']" (click)="collapseNavbar()">
+                <a class="nav-link" routerLink="my-basket" (click)="collapseNavbar()">
                     <span>
                         <fa-icon [icon]="'shopping-basket'" ></fa-icon>
                         <span>Basket</span>

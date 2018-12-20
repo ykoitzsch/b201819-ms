@@ -9,15 +9,23 @@ import {
     BasketDeletePopupComponent,
     BasketDeleteDialogComponent,
     basketRoute,
-    basketPopupRoute
+    basketPopupRoute,
+    MyBasketComponent
 } from '.';
 
 const ENTITY_STATES = [...basketRoute, ...basketPopupRoute];
 
 @NgModule({
     imports: [ShopSharedModule, RouterModule.forChild(ENTITY_STATES)],
-    declarations: [BasketComponent, BasketDetailComponent, BasketUpdateComponent, BasketDeleteDialogComponent, BasketDeletePopupComponent],
-    entryComponents: [BasketComponent, BasketUpdateComponent, BasketDeleteDialogComponent, BasketDeletePopupComponent],
+    declarations: [
+        BasketComponent,
+        BasketDetailComponent,
+        BasketUpdateComponent,
+        BasketDeleteDialogComponent,
+        BasketDeletePopupComponent,
+        MyBasketComponent
+    ],
+    entryComponents: [BasketComponent, BasketUpdateComponent, BasketDeleteDialogComponent, BasketDeletePopupComponent, MyBasketComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ShopBasketModule {}

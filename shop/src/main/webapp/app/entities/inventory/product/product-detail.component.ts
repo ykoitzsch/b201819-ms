@@ -1,5 +1,5 @@
-import { RatingService } from './../../ratings/rating/rating.service';
-import { Rating } from './../../../shared/model/ratings/rating.model';
+import { RatingService } from '../../ratings/rating/rating.service';
+import { Rating } from '../../../shared/model/ratings/rating.model';
 import { JhiAlertService } from 'ng-jhipster';
 import { Basket } from 'app/shared/model/orders/basket.model';
 import { AccountService } from '../../../core/auth/account.service';

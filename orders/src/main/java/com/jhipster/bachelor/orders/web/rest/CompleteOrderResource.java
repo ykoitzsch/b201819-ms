@@ -17,6 +17,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+import javax.ws.rs.QueryParam;
+
 /**
  * REST controller for managing CompleteOrder.
  */
@@ -83,9 +85,9 @@ public class CompleteOrderResource {
      */
     @GetMapping("/complete-orders")
     @Timed
-    public List<CompleteOrder> getAllCompleteOrders() {
+    public List<CompleteOrder> getAllCompleteOrders(@QueryParam("customerId") String customerId) {
         log.debug("REST request to get all CompleteOrders");
-        return completeOrderService.findAll();
+        return completeOrderService.findAll(customerId);
     }
 
     /**

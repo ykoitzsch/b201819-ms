@@ -1,3 +1,4 @@
+import { AccountService } from './../../../core/auth/account.service';
 import { InvoiceService } from './../../invoices/invoice/invoice.service';
 import { Invoice, InvoiceStatus } from './../../../shared/model/invoices/invoice.model';
 import { Product } from 'app/shared/model/inventory/product.model';
@@ -22,6 +23,7 @@ export class CompleteOrderOverviewComponent implements OnInit, OnDestroy {
     eventSubscriber: Subscription;
     products: Product[];
     invoice: Invoice;
+    acc: Account;
 
     constructor(
         private completeOrderService: CompleteOrderService,
@@ -29,19 +31,16 @@ export class CompleteOrderOverviewComponent implements OnInit, OnDestroy {
         private eventManager: JhiEventManager,
         private principal: Principal,
         private productService: ProductService,
-        private invoiceService: InvoiceService
+        private invoiceService: InvoiceService,
+        private accountService: AccountService
     ) {}
 
     loadAll() {
         this.productService.query().subscribe(res => (this.products = res.body));
-        this.completeOrderService.query().subscribe(
+        console.log(this.currentAccount);
+        this.completeOrderService.query({ customerId: this.acc.id }).subscribe(
             (res: HttpResponse<ICompleteOrder[]>) => {
                 this.completeOrders = res.body;
-                for (const c of this.completeOrders) {
-                    if (c.customerId !== this.currentAccount.id) {
-                        this.completeOrders.splice(this.completeOrders.indexOf(c), 1); // remove orders which do not belong to current user
-                    }
-                }
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
@@ -51,7 +50,13 @@ export class CompleteOrderOverviewComponent implements OnInit, OnDestroy {
         this.principal.identity().then(account => {
             this.currentAccount = account;
         });
-        this.loadAll();
+        this.accountService.get().subscribe(
+            (res: HttpResponse<Account>) => {
+                this.acc = res.body;
+                this.loadAll();
+            },
+            (res: HttpErrorResponse) => this.jhiAlertService.error(res.message)
+        );
         this.registerChangeInCompleteOrders();
     }
 
@@ -78,7 +83,6 @@ export class CompleteOrderOverviewComponent implements OnInit, OnDestroy {
                 order.status = OrderStatus.PENDING;
             }
         );
-        console.log('okay');
         this.invoice = new Invoice();
         this.invoice.amount = order.totalPrice;
         this.invoice.code = 'INVOICECODE';

@@ -26,6 +26,7 @@ export class ProductDetailComponent implements OnInit {
     customerDesc: String;
     customerPoints: number;
     customerRatedAlready: boolean;
+    ratingSubmitButtonActive: boolean;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -43,6 +44,8 @@ export class ProductDetailComponent implements OnInit {
             this.customerPoints = 1;
             this.currentRating = 0;
             this.customerRatedAlready = false;
+            this.ratingSubmitButtonActive = false;
+            this.ratings = [];
         });
 
         this.accountService.get().subscribe(response => {
@@ -75,27 +78,37 @@ export class ProductDetailComponent implements OnInit {
         );
     }
 
+    textAreaEmpty() {
+        if (this.customerDesc.trim() !== '') {
+            this.ratingSubmitButtonActive = true;
+        } else {
+            this.ratingSubmitButtonActive = false;
+        }
+    }
+
     calculateRating() {
+        this.currentRating = 0;
         for (const r of this.ratings) {
             this.currentRating = this.currentRating + r.points;
         }
-        this.currentRating = this.currentRating / this.ratings.length;
+        this.currentRating = +Number(this.currentRating / this.ratings.length).toFixed(2);
     }
 
     rate(points, desc) {
-        this.ratingService.create(new Rating(null, points, this.product.id, +this.account.id, desc)).subscribe(
-            (res: HttpResponse<Rating>) => {
-                if (!this.ratingExists()) {
+        if (!this.ratingExists()) {
+            this.ratingService.create(new Rating(null, points, this.product.id, +this.account.id, desc)).subscribe(
+                (res: HttpResponse<Rating>) => {
                     this.ratings.push(res.body);
-                    this.ratingExists();
-                } else {
-                    this.jhiAlertService.error('You have already rated this product');
+                    this.calculateRating();
+                    this.customerRatedAlready = true;
+                },
+                (res: HttpErrorResponse) => {
+                    this.jhiAlertService.error(res.message + ' Rating could not been saved');
                 }
-            },
-            (res: HttpErrorResponse) => {
-                this.jhiAlertService.error('Rating could not been saved');
-            }
-        );
+            );
+        } else {
+            this.jhiAlertService.error('You have already rated this product');
+        }
     }
     ratingExists() {
         for (const r of this.ratings) {

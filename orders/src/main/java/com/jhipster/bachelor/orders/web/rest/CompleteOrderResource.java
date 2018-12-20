@@ -84,20 +84,22 @@ public class CompleteOrderResource {
      */
     @GetMapping("/complete-orders")
     @Timed
-    public ResponseEntity<List<CompleteOrder>> getAllCompleteOrders(
-    		@RequestParam(value="customerId", required = false) String customerId, 
-    		@RequestParam(value="login", required = false) String login) {
+    public ResponseEntity<List<CompleteOrder>> getAllCompleteOrders() {
+    	if("admin".equals(SecurityUtils.getCurrentUserLogin().get()))
+    		return ResponseEntity.ok().body(completeOrderService.findAll());
+    	else return ResponseEntity.status(401).build();
+    }
+    
+    @GetMapping("/my-orders")
+    @Timed
+    public ResponseEntity<List<CompleteOrder>> getCompleteOrdersByCustomerId(
+    		@RequestParam(value="customerId", required = true) String customerId, 
+    		@RequestParam(value="login", required = true) String login) {
     	if(!login.equals(SecurityUtils.getCurrentUserLogin().get())){
     		return ResponseEntity.status(401).build();
     	}
-    	List<CompleteOrder> result;
-    	if(customerId != null)
-    		result = completeOrderService.findByCustomerId(customerId);
-    	else if("admin".equals(SecurityUtils.getCurrentUserLogin().get()))
-    		result = completeOrderService.findAll();
-    	else return ResponseEntity.status(401).build();
-        return ResponseEntity.ok().body(result);
-    }
+		return ResponseEntity.ok().body(completeOrderService.findByCustomerId(customerId));
+    } 
 
     /**
      * GET  /complete-orders/:id : get the "id" completeOrder.

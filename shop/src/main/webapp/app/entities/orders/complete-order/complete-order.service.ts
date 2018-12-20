@@ -12,7 +12,7 @@ type EntityArrayResponseType = HttpResponse<ICompleteOrder[]>;
 @Injectable({ providedIn: 'root' })
 export class CompleteOrderService {
     public resourceUrl = SERVER_API_URL + 'orders/api/complete-orders';
-    public myOrders = SERVER_API_URL + 'orders/api/my-orders';
+    public myOrdersUrl = SERVER_API_URL + 'orders/api/my-orders';
 
     constructor(private http: HttpClient) {}
 
@@ -35,5 +35,9 @@ export class CompleteOrderService {
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    }
+
+    findByCustomerId(p?: any): Observable<EntityArrayResponseType> {
+        return this.http.get<ICompleteOrder[]>(this.myOrdersUrl, { params: p, observe: 'response' });
     }
 }

@@ -40,7 +40,7 @@ export class CompleteOrderOverviewComponent implements OnInit, OnDestroy {
         this.productService.query().subscribe(res => (this.products = res.body));
         this.accountService.get().subscribe(
             (res: HttpResponse<User>) => {
-                this.completeOrderService.query({ customerId: res.body.id, login: res.body.login }).subscribe(
+                this.completeOrderService.findByCustomerId({ customerId: res.body.id, login: res.body.login }).subscribe(
                     (r: HttpResponse<ICompleteOrder[]>) => {
                         this.completeOrders = r.body;
                     },

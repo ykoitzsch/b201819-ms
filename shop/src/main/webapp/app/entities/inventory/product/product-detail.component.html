@@ -33,7 +33,7 @@
                     </div>
                     <div class="list-group-item">
                         <p class="h6 text-warning"><fa-icon [icon]="'star'"></fa-icon> Rating</p>
-                        <div class="small" *ngIf="ratings.length === 0">No ratings available</div>
+                        <div class="small" *ngIf="ratings">No ratings available</div>
                         <div *ngIf="ratings.length > 0">{{ currentRating }}/10 ({{ ratings.length }})</div>
                     </div>
                     <div class="list-group-item">
@@ -64,10 +64,7 @@
                     </div>
                 </div>
                 <div class="row" >
-                    <div class="col" *ngIf="r.description.length === 0">
-                        <i><p>This customer did not leave a description.</p></i>
-                    </div>
-                    <div class="col" *ngIf="r.description.length > 0">
+                    <div class="col">
                         <i><p>{{ r.description }}</p></i>
                     </div>
                 </div>
@@ -88,11 +85,17 @@
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea  [(ngModel)]="customerDesc" name="cDesc" class="form-control" id="description" rows="3">
+                        <textarea
+                            [(ngModel)]="customerDesc"
+                            name="cDesc"
+                            (change)="textAreaEmpty()"
+                            class="form-control"
+                            id="description"
+                            rows="3">
                     </div>
                     <button
                             type="submit"
-                            [disabled]="1 > customerPoints || 10 < customerPoints || customerDesc.trim().length === 0"
+                            [disabled]="1 > customerPoints || 10 < customerPoints || !ratingSubmitButtonActive"
                             (click)="rate(customerPoints, customerDesc)"
                             class="btn btn-primary">Submit
                     </button>

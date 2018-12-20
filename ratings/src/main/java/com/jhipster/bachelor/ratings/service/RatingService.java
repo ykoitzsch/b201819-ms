@@ -70,4 +70,8 @@ public class RatingService {
         log.debug("Request to delete Rating : {}", id);
         ratingRepository.deleteById(id);
     }
+
+	public List<Rating> findByProductId(String productId) {
+		return ratingRepository.findByProductId(Long.valueOf(productId));
+	}
 }

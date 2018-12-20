@@ -84,9 +84,12 @@ public class RatingResource {
      */
     @GetMapping("/ratings")
     @Timed
-    public List<Rating> getAllRatings() {
+    public List<Rating> getAllRatings(@RequestParam(value="productId", required = false) String productId) {
         log.debug("REST request to get all Ratings");
-        return ratingService.findAll();
+        if(productId == null)
+        	return ratingService.findAll();
+        else 
+        	return ratingService.findByProductId(productId);
     }
 
     /**

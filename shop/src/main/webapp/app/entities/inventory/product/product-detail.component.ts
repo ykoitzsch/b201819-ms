@@ -108,23 +108,10 @@ export class ProductDetailComponent implements OnInit {
     }
 
     loadRatings() {
-        this.ratings = [];
-        let i = [];
-        this.ratingService.query().subscribe(
+        this.ratingService.query({ productId: this.product.id }).subscribe(
             (res: HttpResponse<Rating[]>) => {
                 this.ratings = res.body;
-                for (const r of this.ratings) {
-                    if (r.productId !== this.product.id) {
-                        console.log('index -> ' + this.ratings.indexOf(r));
-                        i.push(this.ratings.indexOf(r));
-                        // this.ratings.splice(this.ratings.indexOf(r), 1);
-                    }
-                }
                 this.calculateRating();
-                for (const index of i) {
-                    console.log('remove -> ' + index);
-                    this.ratings.splice(index, 1);
-                }
                 this.ratingExists();
             },
             (res: HttpErrorResponse) => {

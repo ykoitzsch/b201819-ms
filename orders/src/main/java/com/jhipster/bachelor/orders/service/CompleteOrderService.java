@@ -70,14 +70,15 @@ public class CompleteOrderService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<CompleteOrder> findAll(String customerId) {
+    public List<CompleteOrder> findAll() {
         log.debug("Request to get all CompleteOrders");
-        if(customerId != null) {
-        	return completeOrderRepository.findByCustomerId(Long.valueOf(customerId));
-        }
-        else return completeOrderRepository.findAll();
+        return completeOrderRepository.findAll();
     }
-
+    
+    @Transactional(readOnly = true)
+    public List<CompleteOrder> findByCustomerId(String customerId) {
+    	return completeOrderRepository.findByCustomerId(Long.valueOf(customerId));   
+    }
 
     /**
      * Get one completeOrder by id.

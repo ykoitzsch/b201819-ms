@@ -12,6 +12,7 @@ type EntityArrayResponseType = HttpResponse<ICompleteOrder[]>;
 @Injectable({ providedIn: 'root' })
 export class CompleteOrderService {
     public resourceUrl = SERVER_API_URL + 'orders/api/complete-orders';
+    public myOrders = SERVER_API_URL + 'orders/api/my-orders';
 
     constructor(private http: HttpClient) {}
 

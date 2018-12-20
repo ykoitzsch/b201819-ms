@@ -1,3 +1,4 @@
+import { Account } from './../../../core/user/account.model';
 import { AccountService } from './../../../core/auth/account.service';
 import { InvoiceService } from './../../invoices/invoice/invoice.service';
 import { Invoice, InvoiceStatus } from './../../../shared/model/invoices/invoice.model';
@@ -8,7 +9,7 @@ import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { ICompleteOrder } from 'app/shared/model/orders/complete-order.model';
-import { Principal, AccountService } from 'app/core';
+import { Principal, AccountService, User } from 'app/core';
 import { CompleteOrderService } from './complete-order.service';
 import { ProductService } from '../../inventory/product';
 import { OrderStatus } from '../../../shared/model/orders/complete-order.model';
@@ -23,7 +24,7 @@ export class CompleteOrderOverviewComponent implements OnInit, OnDestroy {
     eventSubscriber: Subscription;
     products: Product[];
     invoice: Invoice;
-    acc: Account;
+    currentUser: User;
 
     constructor(
         private completeOrderService: CompleteOrderService,
@@ -37,26 +38,25 @@ export class CompleteOrderOverviewComponent implements OnInit, OnDestroy {
 
     loadAll() {
         this.productService.query().subscribe(res => (this.products = res.body));
-        console.log(this.currentAccount);
-        this.completeOrderService.query({ customerId: this.acc.id }).subscribe(
-            (res: HttpResponse<ICompleteOrder[]>) => {
-                this.completeOrders = res.body;
+        this.accountService.get().subscribe(
+            (res: HttpResponse<User>) => {
+                this.completeOrderService.query({ customerId: res.body.id, login: res.body.login }).subscribe(
+                    (r: HttpResponse<ICompleteOrder[]>) => {
+                        this.completeOrders = r.body;
+                    },
+                    (r: HttpErrorResponse) => this.onError(r.message)
+                );
             },
-            (res: HttpErrorResponse) => this.onError(res.message)
+            (res: HttpErrorResponse) => this.jhiAlertService.error(res.message)
         );
     }
 
     ngOnInit() {
         this.principal.identity().then(account => {
             this.currentAccount = account;
+            this.loadAll();
         });
-        this.accountService.get().subscribe(
-            (res: HttpResponse<Account>) => {
-                this.acc = res.body;
-                this.loadAll();
-            },
-            (res: HttpErrorResponse) => this.jhiAlertService.error(res.message)
-        );
+
         this.registerChangeInCompleteOrders();
     }
 

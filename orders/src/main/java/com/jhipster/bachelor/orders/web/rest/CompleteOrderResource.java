@@ -2,6 +2,7 @@ package com.jhipster.bachelor.orders.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.jhipster.bachelor.orders.domain.CompleteOrder;
+import com.jhipster.bachelor.orders.security.SecurityUtils;
 import com.jhipster.bachelor.orders.service.CompleteOrderService;
 import com.jhipster.bachelor.orders.web.rest.errors.BadRequestAlertException;
 import com.jhipster.bachelor.orders.web.rest.util.HeaderUtil;
@@ -16,8 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-
-import javax.ws.rs.QueryParam;
 
 /**
  * REST controller for managing CompleteOrder.
@@ -85,9 +84,19 @@ public class CompleteOrderResource {
      */
     @GetMapping("/complete-orders")
     @Timed
-    public List<CompleteOrder> getAllCompleteOrders(@QueryParam("customerId") String customerId) {
-        log.debug("REST request to get all CompleteOrders");
-        return completeOrderService.findAll(customerId);
+    public ResponseEntity<List<CompleteOrder>> getAllCompleteOrders(
+    		@RequestParam(value="customerId", required = false) String customerId, 
+    		@RequestParam(value="login", required = false) String login) {
+    	if(!login.equals(SecurityUtils.getCurrentUserLogin().get())){
+    		return ResponseEntity.status(401).build();
+    	}
+    	List<CompleteOrder> result;
+    	if(customerId != null)
+    		result = completeOrderService.findByCustomerId(customerId);
+    	else if("admin".equals(SecurityUtils.getCurrentUserLogin().get()))
+    		result = completeOrderService.findAll();
+    	else return ResponseEntity.status(401).build();
+        return ResponseEntity.ok().body(result);
     }
 
     /**

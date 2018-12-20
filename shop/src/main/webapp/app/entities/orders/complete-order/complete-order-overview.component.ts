@@ -87,15 +87,20 @@ export class CompleteOrderOverviewComponent implements OnInit, OnDestroy {
         this.invoice.amount = order.totalPrice;
         this.invoice.code = 'INVOICECODE';
         this.invoice.customerId = order.customerId;
-        this.invoice.dueDate = '01.01.2019';
+        this.invoice.dueDate = this.calculateDueDate();
         this.invoice.orderId = order.id;
-        this.invoice.paymentDate = Date();
+        this.invoice.paymentDate = new Date().toDateString();
         this.invoice.status = InvoiceStatus.PAID;
         this.invoiceService.create(this.invoice).subscribe(r => {
             console.log(r);
         });
     }
 
+    calculateDueDate() {
+        const date = new Date();
+        date.setMonth(date.getMonth() + 1);
+        return date.toDateString();
+    }
     hide(order) {
         this.completeOrders.splice(this.completeOrders.indexOf(order), 1);
     }

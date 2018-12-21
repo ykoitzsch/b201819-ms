@@ -1,3 +1,4 @@
+import { AccountService } from 'app/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,7 +11,7 @@ import { IInvoice } from 'app/shared/model/invoices/invoice.model';
 export class InvoiceDetailComponent implements OnInit {
     invoice: IInvoice;
 
-    constructor(private activatedRoute: ActivatedRoute) {}
+    constructor(private activatedRoute: ActivatedRoute, private accountService: AccountService) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ invoice }) => {

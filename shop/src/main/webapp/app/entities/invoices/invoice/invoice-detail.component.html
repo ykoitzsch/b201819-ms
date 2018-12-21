@@ -1,50 +1,36 @@
 <div class="row justify-content-center">
-    <div class="col-8">
+    <div class="col-4">
         <div *ngIf="invoice">
-            <h2><span>Invoice</span> {{invoice.id}}</h2>
+            <h2><span>Invoice</span></h2><span style="text-align:right" class="small">{{invoice.paymentDate}}</span>
             <hr>
             <jhi-alert-error></jhi-alert-error>
-            <dl class="row-md jh-entity-details">
-                <dt><span>Code</span></dt>
-                <dd>
-                    <span>{{invoice.code}}</span>
-                </dd>
-                <dt><span>Status</span></dt>
-                <dd>
-                    <span>{{invoice.status}}</span>
-                </dd>
-                <dt><span>Due Date</span></dt>
-                <dd>
-                    <span>{{invoice.dueDate}}</span>
-                </dd>
-                <dt><span>Payment Date</span></dt>
-                <dd>
-                    <span>{{invoice.paymentDate}}</span>
-                </dd>
-                <dt><span>Amount</span></dt>
-                <dd>
-                    <span>{{invoice.amount}}</span>
-                </dd>
-                <dt><span>Customer Id</span></dt>
-                <dd>
-                    <span>{{invoice.customerId}}</span>
-                </dd>
-                <dt><span>Order Id</span></dt>
-                <dd>
-                    <span>{{invoice.orderId}}</span>
-                </dd>
-            </dl>
+            <div class="row">
+                <div class="col-sm">
+                    <h5>Invoice details</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm" >
+                    <p>Payment date</p>
+                    <p>Invoice number</p>
+                    <p>Invoice status</p>
+                    <p>Costs</p>
+                    <p>Order Id</p>
+                </div>
+                <div class="col-sm" style="text-align:right">
+                    <p>{{invoice.paymentDate}}</p>
+                    <p>{{invoice.code}}</p>
+                    <p>{{invoice.status}}</p>
+                    <p>{{invoice.amount}} €</p>
+                    <p>{{invoice.orderId}}</p>
+                </div>
+            </div>
+            <hr>
 
             <button type="submit"
                     (click)="previousState()"
                     class="btn btn-info">
                 <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/invoice', invoice.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
             </button>
         </div>
     </div>

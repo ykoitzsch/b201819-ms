@@ -42,14 +42,14 @@
                             </button>
                             <br>
                             <button type="submit"
-                                    routerLink="/invoice"
+                                    [routerLink]="['/invoice', c.invoiceId, 'view']"
                                     [disabled]="c.status === 'PENDING'"
                                     class="btn btn-primary btn-block">
                                     <fa-icon [icon]="'file-invoice'"></fa-icon>&nbsp;<span> Invoice</span>
                             </button>
                             <br>
                             <button type="submit"
-                                    (click)="hide(o)"
+                                    (click)="hide(c)"
                                     class="btn btn-warning btn-block">
                                     <fa-icon [icon]="'eye-slash'"></fa-icon>&nbsp;<span> Hide Order</span>
                             </button>

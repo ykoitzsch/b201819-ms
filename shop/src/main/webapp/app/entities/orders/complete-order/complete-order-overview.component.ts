@@ -5,8 +5,9 @@ import { Invoice, InvoiceStatus } from './../../../shared/model/invoices/invoice
 import { Product } from 'app/shared/model/inventory/product.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { Subscription, ObjectUnsubscribedError } from 'rxjs';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { v4 } from 'uuid';
 
 import { ICompleteOrder } from 'app/shared/model/orders/complete-order.model';
 import { Principal, AccountService, User } from 'app/core';
@@ -73,26 +74,39 @@ export class CompleteOrderOverviewComponent implements OnInit, OnDestroy {
     }
 
     payNow(order) {
-        order.status = OrderStatus.COMPLETED;
-        this.completeOrderService.update(order).subscribe(
-            (res: HttpResponse<ICompleteOrder>) => {
-                this.jhiAlertService.success('Order with order number ' + this.generateOrderNo(order) + ' has been paid');
-            },
-            (res: HttpErrorResponse) => {
-                this.jhiAlertService.error(res.status + res.error, null, null);
-                order.status = OrderStatus.PENDING;
-            }
-        );
         this.invoice = new Invoice();
         this.invoice.amount = order.totalPrice;
-        this.invoice.code = 'INVOICECODE';
+        this.invoice.code = this.generateInvoiceCode();
         this.invoice.customerId = order.customerId;
         this.invoice.dueDate = this.calculateDueDate();
         this.invoice.orderId = order.id;
         this.invoice.paymentDate = new Date().toDateString();
         this.invoice.status = InvoiceStatus.PAID;
-        this.invoiceService.create(this.invoice).subscribe(r => {
-            console.log(r);
+        this.invoiceService.create(this.invoice).subscribe(
+            (res: HttpResponse<Invoice>) => {
+                order.status = OrderStatus.COMPLETED;
+                order.invoiceId = res.body.id;
+                this.completeOrderService.update(order).subscribe(
+                    (r: HttpResponse<ICompleteOrder>) => {
+                        this.jhiAlertService.success('Order with order number ' + this.generateOrderNo(order) + ' has been paid');
+                    },
+                    (r: HttpErrorResponse) => {
+                        this.jhiAlertService.error(res.status + r.error, null, null);
+                        order.status = OrderStatus.PENDING;
+                    }
+                );
+            },
+            (res: HttpErrorResponse) => {
+                this.jhiAlertService.error(res.error);
+            }
+        );
+    }
+
+    generateInvoiceCode(): string {
+        return 'xxxxxxxx'.replace(/[xy]/g, char => {
+            const random = Math.random() * 16;
+            const value = char === 'x' ? random : random % 4 + 8;
+            return value.toString(7);
         });
     }
 
@@ -104,6 +118,7 @@ export class CompleteOrderOverviewComponent implements OnInit, OnDestroy {
     hide(order) {
         this.completeOrders.splice(this.completeOrders.indexOf(order), 1);
     }
+
     generateOrderNo(timestamp) {
         return timestamp.replace(/[^a-zA-Z0-9]/g, '');
     }

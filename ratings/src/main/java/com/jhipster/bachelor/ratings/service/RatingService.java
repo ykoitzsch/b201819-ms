@@ -4,7 +4,8 @@ import com.jhipster.bachelor.ratings.domain.Rating;
 import com.jhipster.bachelor.ratings.repository.RatingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,14 @@ public class RatingService {
         this.ratingRepository = ratingRepository;
     }
 
+    
+    @StreamListener(Processor.INPUT)
+    public void registerRating(Rating rating) {
+    	log.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    	log.debug(rating.toString());
+    }
+    
+    
     /**
      * Save a rating.
      *

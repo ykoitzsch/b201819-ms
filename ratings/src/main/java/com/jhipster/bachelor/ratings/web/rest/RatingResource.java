@@ -8,7 +8,10 @@ import com.jhipster.bachelor.ratings.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,9 +33,12 @@ public class RatingResource {
     private static final String ENTITY_NAME = "ratingsRating";
 
     private RatingService ratingService;
+    
+    private MessageChannel channel;
 
-    public RatingResource(RatingService ratingService) {
+    public RatingResource(RatingService ratingService, Processor processor) {
         this.ratingService = ratingService;
+        this.channel = processor.output();
     }
 
     /**
@@ -49,11 +55,25 @@ public class RatingResource {
         if (rating.getId() != null) {
             throw new BadRequestAlertException("A new rating cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        log.debug("ich bin hier!!!");
+        channel.send(MessageBuilder.withPayload(rating).build());
+        return ResponseEntity.ok(rating);
+    }
+    
+/*    @PostMapping("/ratings")
+    @Timed
+    public ResponseEntity<Rating> createRating(@Valid @RequestBody Rating rating) throws URISyntaxException {
+        log.debug("REST request to save Rating : {}", rating);
+        if (rating.getId() != null) {
+            throw new BadRequestAlertException("A new rating cannot already have an ID", ENTITY_NAME, "idexists");
+        }
         Rating result = ratingService.save(rating);
         return ResponseEntity.created(new URI("/api/ratings/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
-    }
+    }*/
+    
+    
 
     /**
      * PUT  /ratings : Updates an existing rating.

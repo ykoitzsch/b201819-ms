@@ -1,9 +1,5 @@
 package com.jhipster.bachelor.customers.config;
 
-import com.jhipster.bachelor.customers.security.*;
-import com.jhipster.bachelor.customers.security.jwt.*;
-
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -15,57 +11,68 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
+import com.jhipster.bachelor.customers.security.AuthoritiesConstants;
+import com.jhipster.bachelor.customers.security.jwt.JWTConfigurer;
+import com.jhipster.bachelor.customers.security.jwt.TokenProvider;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Import(SecurityProblemSupport.class)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final TokenProvider tokenProvider;
+  private final TokenProvider tokenProvider;
 
-    private final SecurityProblemSupport problemSupport;
+  private final SecurityProblemSupport problemSupport;
 
-    public SecurityConfiguration(TokenProvider tokenProvider, SecurityProblemSupport problemSupport) {
-        this.tokenProvider = tokenProvider;
-        this.problemSupport = problemSupport;
-    }
+  public SecurityConfiguration(TokenProvider tokenProvider, SecurityProblemSupport problemSupport) {
+    this.tokenProvider = tokenProvider;
+    this.problemSupport = problemSupport;
+  }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring()
-            .antMatchers(HttpMethod.OPTIONS, "/**")
-            .antMatchers("/h2-console/**")
-            .antMatchers("/swagger-ui/index.html")
-            .antMatchers("/test/**");
-    }
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    web
+      .ignoring()
+      .antMatchers(HttpMethod.OPTIONS, "/**")
+      .antMatchers("/h2-console/**")
+      .antMatchers("/swagger-ui/index.html")
+      .antMatchers("/test/**");
+  }
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http
-            .csrf()
-            .disable()
-            .exceptionHandling()
-            .authenticationEntryPoint(problemSupport)
-            .accessDeniedHandler(problemSupport)
-        .and()
-            .headers()
-            .frameOptions()
-            .disable()
-        .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-            .authorizeRequests()
-            .antMatchers("/api/**").authenticated()
-            .antMatchers("/management/health").permitAll()
-            .antMatchers("/management/info").permitAll()
-            .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
-        .and()
-            .apply(securityConfigurerAdapter());
+  @Override
+  public void configure(HttpSecurity http) throws Exception {
+    http
+      .csrf()
+      .disable()
+      .exceptionHandling()
+      .authenticationEntryPoint(problemSupport)
+      .accessDeniedHandler(problemSupport)
+      .and()
+      .headers()
+      .frameOptions()
+      .disable()
+      .and()
+      .sessionManagement()
+      .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+      .and()
+      .authorizeRequests()
+      .antMatchers("/customers/**")
+      .authenticated()
+      .antMatchers("/api/**")
+      .authenticated()
+      .antMatchers("/management/health")
+      .permitAll()
+      .antMatchers("/management/info")
+      .permitAll()
+      .antMatchers("/management/**")
+      .hasAuthority(AuthoritiesConstants.ADMIN)
+      .and()
+      .apply(securityConfigurerAdapter());
 
-    }
+  }
 
-    private JWTConfigurer securityConfigurerAdapter() {
-        return new JWTConfigurer(tokenProvider);
-    }
+  private JWTConfigurer securityConfigurerAdapter() {
+    return new JWTConfigurer(tokenProvider);
+  }
 }

@@ -6,6 +6,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { ICustomer } from 'app/shared/model/customers/customer.model';
 import { CustomerService } from './customer.service';
+import { CustomerEvent } from '../../../shared/model/customers/customer-event.model';
 
 @Component({
     selector: 'jhi-customer-delete-dialog',
@@ -22,6 +23,16 @@ export class CustomerDeleteDialogComponent {
 
     confirmDelete(id: number) {
         this.customerService.delete(id).subscribe(response => {
+            this.eventManager.broadcast({
+                name: 'customerListModification',
+                content: 'Deleted an customer'
+            });
+            this.activeModal.dismiss(true);
+        });
+    }
+
+    confirmDeleteEvent(customer: ICustomer) {
+        this.customerService.createEvent(new CustomerEvent(this.customer, 'CUSTOMER_DELETED')).subscribe(response => {
             this.eventManager.broadcast({
                 name: 'customerListModification',
                 content: 'Deleted an customer'

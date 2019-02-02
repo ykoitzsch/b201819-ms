@@ -1,3 +1,4 @@
+import { CategoryEvent } from './../../../shared/model/inventory/category-event-model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -29,6 +30,16 @@ export class ProductCategoryDeleteDialogComponent {
             this.eventManager.broadcast({
                 name: 'productCategoryListModification',
                 content: 'Deleted an productCategory'
+            });
+            this.activeModal.dismiss(true);
+        });
+    }
+
+    confirmDeleteEvent(product: IProductCategory) {
+        this.productCategoryService.createEvent(new CategoryEvent(this.productCategory, 'CATEGORY_DELETED')).subscribe(response => {
+            this.eventManager.broadcast({
+                name: 'customerListModification',
+                content: 'Deleted an customer'
             });
             this.activeModal.dismiss(true);
         });

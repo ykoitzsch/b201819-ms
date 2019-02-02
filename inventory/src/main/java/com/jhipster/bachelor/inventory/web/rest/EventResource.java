@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 import com.jhipster.bachelor.inventory.domain.Product;
 import com.jhipster.bachelor.inventory.domain.ProductCategory;
+import com.jhipster.bachelor.inventory.service.ProductCategoryService;
 import com.jhipster.bachelor.inventory.service.ProductService;
 
 import event.product.ProductEvent;
@@ -22,8 +23,11 @@ public class EventResource {
 
   private ProductService productService;
 
-  public EventResource(ProductService productService) {
+  private ProductCategoryService productCategoryService;
+
+  public EventResource(ProductService productService, ProductCategoryService productCategoryService) {
     this.productService = productService;
+    this.productCategoryService = productCategoryService;
   }
 
   @PostMapping("/product-events/{event}")
@@ -42,7 +46,7 @@ public class EventResource {
   public ResponseEntity<Object> addCustomerEvent(@RequestBody ProductCategory category, @PathVariable("event") String event)
       throws Exception {
     if ("CATEGORY_DELETED".equals(event) || "CATEGORY_UPDATED".equals(event) || "CATEGORY_CREATED".equals(event)) {
-      productService.addCategoryEvent(new CategoryEvent(category, event));
+      productCategoryService.addCategoryEvent(new CategoryEvent(category, event));
     } else
       throw new Exception("Unknown Event");
     return new ResponseEntity<>(HttpStatus.OK);

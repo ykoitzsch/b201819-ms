@@ -1,3 +1,4 @@
+import { CategoryEvent } from './../../../shared/model/inventory/category-event-model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -12,8 +13,13 @@ type EntityArrayResponseType = HttpResponse<IProductCategory[]>;
 @Injectable({ providedIn: 'root' })
 export class ProductCategoryService {
     public resourceUrl = SERVER_API_URL + 'inventory/api/product-categories';
+    public eventUrl = SERVER_API_URL + 'inventory/api/category-events';
 
     constructor(private http: HttpClient) {}
+
+    createEvent(event: CategoryEvent): Observable<HttpResponse<CategoryEvent>> {
+        return this.http.post<CategoryEvent>(`${this.eventUrl}/${event.event}`, event.category, { observe: 'response' });
+    }
 
     create(productCategory: IProductCategory): Observable<EntityResponseType> {
         return this.http.post<IProductCategory>(this.resourceUrl, productCategory, { observe: 'response' });

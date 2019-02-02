@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { IProduct } from 'app/shared/model/inventory/product.model';
+import { ProductEvent } from '../../../shared/model/inventory/product-event-model';
 
 type EntityResponseType = HttpResponse<IProduct>;
 type EntityArrayResponseType = HttpResponse<IProduct[]>;
@@ -12,8 +13,13 @@ type EntityArrayResponseType = HttpResponse<IProduct[]>;
 @Injectable({ providedIn: 'root' })
 export class ProductService {
     public resourceUrl = SERVER_API_URL + 'inventory/api/products';
+    public eventUrl = SERVER_API_URL + 'inventory/api/product-events';
 
     constructor(private http: HttpClient) {}
+
+    createEvent(event: ProductEvent): Observable<HttpResponse<ProductEvent>> {
+        return this.http.post<ProductEvent>(`${this.eventUrl}/${event.event}`, event.product, { observe: 'response' });
+    }
 
     create(product: IProduct): Observable<EntityResponseType> {
         return this.http.post<IProduct>(this.resourceUrl, product, { observe: 'response' });

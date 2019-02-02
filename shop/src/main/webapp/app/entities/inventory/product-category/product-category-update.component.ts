@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { IProductCategory } from 'app/shared/model/inventory/product-category.model';
 import { ProductCategoryService } from './product-category.service';
+import { CategoryEvent } from '../../../shared/model/inventory/category-event-model';
 
 @Component({
     selector: 'jhi-product-category-update',
@@ -30,14 +31,19 @@ export class ProductCategoryUpdateComponent implements OnInit {
     save() {
         this.isSaving = true;
         if (this.productCategory.id !== undefined) {
-            this.subscribeToSaveResponse(this.productCategoryService.update(this.productCategory));
+            this.subscribeToSaveResponse(
+                this.productCategoryService.createEvent(new CategoryEvent(this.productCategory, 'CATEGORY_UPDATED'))
+            );
         } else {
-            this.subscribeToSaveResponse(this.productCategoryService.create(this.productCategory));
+            this.productCategory.id = this.randomInt();
+            this.subscribeToSaveResponse(
+                this.productCategoryService.createEvent(new CategoryEvent(this.productCategory, 'CATEGORY_CREATED'))
+            );
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<HttpResponse<IProductCategory>>) {
-        result.subscribe((res: HttpResponse<IProductCategory>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    private subscribeToSaveResponse(result: Observable<HttpResponse<any>>) {
+        result.subscribe((res: HttpResponse<any>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
     }
 
     private onSaveSuccess() {
@@ -47,5 +53,9 @@ export class ProductCategoryUpdateComponent implements OnInit {
 
     private onSaveError() {
         this.isSaving = false;
+    }
+
+    private randomInt() {
+        return Math.floor(Math.random() * (10000 - 1 + 1)) + 1;
     }
 }

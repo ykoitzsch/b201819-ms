@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { IRating } from 'app/shared/model/ratings/rating.model';
 import { RatingService } from './rating.service';
+import { RatingEvent } from '../../../shared/model/ratings/rating-event.model';
 
 @Component({
     selector: 'jhi-rating-update',
@@ -30,14 +31,15 @@ export class RatingUpdateComponent implements OnInit {
     save() {
         this.isSaving = true;
         if (this.rating.id !== undefined) {
-            this.subscribeToSaveResponse(this.ratingService.update(this.rating));
+            this.subscribeToSaveResponse(this.ratingService.createEvent(new RatingEvent(this.rating, 'RATING_UPDATED')));
         } else {
-            this.subscribeToSaveResponse(this.ratingService.create(this.rating));
+            this.rating.id = this.randomInt();
+            this.subscribeToSaveResponse(this.ratingService.createEvent(new RatingEvent(this.rating, 'RATING_CREATED')));
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<HttpResponse<IRating>>) {
-        result.subscribe((res: HttpResponse<IRating>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    private subscribeToSaveResponse(result: Observable<HttpResponse<any>>) {
+        result.subscribe((res: HttpResponse<any>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
     }
 
     private onSaveSuccess() {
@@ -47,5 +49,9 @@ export class RatingUpdateComponent implements OnInit {
 
     private onSaveError() {
         this.isSaving = false;
+    }
+
+    private randomInt() {
+        return Math.floor(Math.random() * (10000 - 1 + 1)) + 1;
     }
 }

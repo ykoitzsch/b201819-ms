@@ -38,8 +38,8 @@ export class ProductCategoryDeleteDialogComponent {
     confirmDeleteEvent(product: IProductCategory) {
         this.productCategoryService.createEvent(new CategoryEvent(this.productCategory, 'CATEGORY_DELETED')).subscribe(response => {
             this.eventManager.broadcast({
-                name: 'customerListModification',
-                content: 'Deleted an customer'
+                name: 'productCategoryListModification',
+                content: 'Deleted a category'
             });
             this.activeModal.dismiss(true);
         });

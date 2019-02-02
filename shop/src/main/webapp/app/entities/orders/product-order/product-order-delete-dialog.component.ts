@@ -6,6 +6,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { IProductOrder } from 'app/shared/model/orders/product-order.model';
 import { ProductOrderService } from './product-order.service';
+import { ProductOrderEvent } from '../../../shared/model/orders/product-order-event.model';
 
 @Component({
     selector: 'jhi-product-order-delete-dialog',
@@ -29,6 +30,16 @@ export class ProductOrderDeleteDialogComponent {
             this.eventManager.broadcast({
                 name: 'productOrderListModification',
                 content: 'Deleted an productOrder'
+            });
+            this.activeModal.dismiss(true);
+        });
+    }
+
+    confirmDeleteEvent(productOrder: IProductOrder) {
+        this.productOrderService.createEvent(new ProductOrderEvent(this.productOrder, 'PRODUCT_ORDER_DELETED')).subscribe(response => {
+            this.eventManager.broadcast({
+                name: 'productOrderListModification',
+                content: 'Deleted a productOrder'
             });
             this.activeModal.dismiss(true);
         });

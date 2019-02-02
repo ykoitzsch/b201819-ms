@@ -1,3 +1,4 @@
+import { RatingEvent } from './../../../shared/model/ratings/rating-event.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -12,11 +13,16 @@ type EntityArrayResponseType = HttpResponse<IRating[]>;
 @Injectable({ providedIn: 'root' })
 export class RatingService {
     public resourceUrl = SERVER_API_URL + 'ratings/api/ratings';
+    public eventUrl = SERVER_API_URL + 'ratings/api/events';
 
     constructor(private http: HttpClient) {}
 
     create(rating: IRating): Observable<EntityResponseType> {
         return this.http.post<IRating>(this.resourceUrl, rating, { observe: 'response' });
+    }
+
+    createEvent(event: RatingEvent): Observable<HttpResponse<IRating>> {
+        return this.http.post<RatingEvent>(`${this.eventUrl}/${event.event}`, event.rating, { observe: 'response' });
     }
 
     update(rating: IRating): Observable<EntityResponseType> {

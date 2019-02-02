@@ -34,8 +34,8 @@ export class ProductDeleteDialogComponent {
     confirmDeleteEvent(product: IProduct) {
         this.productService.createEvent(new ProductEvent(this.product, 'PRODUCT_DELETED')).subscribe(response => {
             this.eventManager.broadcast({
-                name: 'customerListModification',
-                content: 'Deleted an customer'
+                name: 'productListModification',
+                content: 'Deleted a product'
             });
             this.activeModal.dismiss(true);
         });

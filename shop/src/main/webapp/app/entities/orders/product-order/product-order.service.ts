@@ -1,3 +1,5 @@
+import { ProductOrderEvent } from './../../../shared/model/orders/product-order-event.model';
+import { ProductOrder } from './../../../shared/model/orders/product-order.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -12,11 +14,16 @@ type EntityArrayResponseType = HttpResponse<IProductOrder[]>;
 @Injectable({ providedIn: 'root' })
 export class ProductOrderService {
     public resourceUrl = SERVER_API_URL + 'orders/api/product-orders';
+    public eventUrl = SERVER_API_URL + 'orders/api/productOrder-events';
 
     constructor(private http: HttpClient) {}
 
     create(productOrder: IProductOrder): Observable<EntityResponseType> {
         return this.http.post<IProductOrder>(this.resourceUrl, productOrder, { observe: 'response' });
+    }
+
+    createEvent(event: ProductOrderEvent): Observable<HttpResponse<any>> {
+        return this.http.post<ProductOrderEvent>(`${this.eventUrl}/${event.event}`, event.productOrder, { observe: 'response' });
     }
 
     update(productOrder: IProductOrder): Observable<EntityResponseType> {

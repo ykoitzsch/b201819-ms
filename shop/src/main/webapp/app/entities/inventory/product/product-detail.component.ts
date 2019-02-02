@@ -1,3 +1,4 @@
+import { IRating } from './../../../shared/model/ratings/rating.model';
 import { RatingService } from '../../ratings/rating/rating.service';
 import { Rating } from '../../../shared/model/ratings/rating.model';
 import { JhiAlertService } from 'ng-jhipster';
@@ -11,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { IProduct } from 'app/shared/model/inventory/product.model';
 import { BasketService } from '../../orders/basket';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { RatingEvent } from '../../../shared/model/ratings/rating-event.model';
 
 @Component({
     selector: 'jhi-product-detail',
@@ -96,16 +98,20 @@ export class ProductDetailComponent implements OnInit {
 
     rate(points, desc) {
         if (!this.ratingExists()) {
-            this.ratingService.create(new Rating(null, points, this.product.id, +this.account.id, desc)).subscribe(
-                (res: HttpResponse<Rating>) => {
-                    this.ratings.push(res.body);
-                    this.calculateRating();
-                    this.customerRatedAlready = true;
-                },
-                (res: HttpErrorResponse) => {
-                    this.jhiAlertService.error(res.message + ' Rating could not been saved');
-                }
-            );
+            this.ratingService
+                .createEvent(
+                    new RatingEvent(new Rating(this.randomInt(), points, this.product.id, +this.account.id, desc), 'RATING_CREATED')
+                )
+                .subscribe(
+                    (res: HttpResponse<IRating>) => {
+                        this.ratings.push(res.body);
+                        this.calculateRating();
+                        this.customerRatedAlready = true;
+                    },
+                    (res: HttpErrorResponse) => {
+                        this.jhiAlertService.error(res.message + ' Rating could not been saved');
+                    }
+                );
         } else {
             this.jhiAlertService.error('You have already rated this product');
         }
@@ -131,5 +137,9 @@ export class ProductDetailComponent implements OnInit {
                 this.jhiAlertService.error('Rating Service is at the moment not available');
             }
         );
+    }
+
+    private randomInt() {
+        return Math.floor(Math.random() * (10000 - 1 + 1)) + 1;
     }
 }

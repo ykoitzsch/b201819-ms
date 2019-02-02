@@ -6,6 +6,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { IRating } from 'app/shared/model/ratings/rating.model';
 import { RatingService } from './rating.service';
+import { RatingEvent } from 'app/shared/model/ratings/rating-event.model';
 
 @Component({
     selector: 'jhi-rating-delete-dialog',
@@ -25,6 +26,16 @@ export class RatingDeleteDialogComponent {
             this.eventManager.broadcast({
                 name: 'ratingListModification',
                 content: 'Deleted an rating'
+            });
+            this.activeModal.dismiss(true);
+        });
+    }
+
+    confirmDeleteEvent(rating: IRating) {
+        this.ratingService.createEvent(new RatingEvent(this.rating, 'RATING_DELETED')).subscribe(response => {
+            this.eventManager.broadcast({
+                name: 'ratingListModification',
+                content: 'Deleted a rating'
             });
             this.activeModal.dismiss(true);
         });

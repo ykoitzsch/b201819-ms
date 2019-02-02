@@ -1,4 +1,4 @@
-import { User } from './../../../core/user/user.model';
+import { User } from '../../../core/user/user.model';
 import { Subscription } from 'rxjs';
 import { AccountService, Principal } from 'app/core';
 import { CompleteOrderService } from '../complete-order/complete-order.service';

@@ -1,3 +1,5 @@
+import { IBasket } from './../../../shared/model/orders/basket.model';
+import { BasketEvent } from './../../../shared/model/orders/basket-event.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -12,11 +14,16 @@ type EntityArrayResponseType = HttpResponse<IBasket[]>;
 @Injectable({ providedIn: 'root' })
 export class BasketService {
     public resourceUrl = SERVER_API_URL + 'orders/api/baskets';
+    public eventUrl = SERVER_API_URL + 'orders/api/basket-events';
 
     constructor(private http: HttpClient) {}
 
     create(basket: IBasket): Observable<EntityResponseType> {
         return this.http.post<IBasket>(this.resourceUrl, basket, { observe: 'response' });
+    }
+
+    createEvent(event: BasketEvent): Observable<HttpResponse<any>> {
+        return this.http.post<BasketEvent>(`${this.eventUrl}/${event.event}`, event.basket, { observe: 'response' });
     }
 
     update(basket: IBasket): Observable<EntityResponseType> {

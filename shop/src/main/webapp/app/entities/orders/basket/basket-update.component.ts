@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { IBasket } from 'app/shared/model/orders/basket.model';
 import { BasketService } from './basket.service';
+import { BasketEvent } from 'app/shared/model/orders/basket-event.model';
 
 @Component({
     selector: 'jhi-basket-update',
@@ -30,9 +31,10 @@ export class BasketUpdateComponent implements OnInit {
     save() {
         this.isSaving = true;
         if (this.basket.id !== undefined) {
-            this.subscribeToSaveResponse(this.basketService.update(this.basket));
+            this.subscribeToSaveResponse(this.basketService.createEvent(new BasketEvent(this.basket, 'BASKET_UPDATED')));
         } else {
-            this.subscribeToSaveResponse(this.basketService.create(this.basket));
+            this.basket.id = this.randomInt();
+            this.subscribeToSaveResponse(this.basketService.createEvent(new BasketEvent(this.basket, 'BASKET_CREATED')));
         }
     }
 
@@ -47,5 +49,9 @@ export class BasketUpdateComponent implements OnInit {
 
     private onSaveError() {
         this.isSaving = false;
+    }
+
+    private randomInt() {
+        return Math.floor(Math.random() * (10000 - 1 + 1)) + 1;
     }
 }

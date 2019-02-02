@@ -1,3 +1,4 @@
+import { CompleteOrderEvent } from './../../../shared/model/orders/complete-order-event.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
@@ -30,9 +31,14 @@ export class CompleteOrderUpdateComponent implements OnInit {
     save() {
         this.isSaving = true;
         if (this.completeOrder.id !== undefined) {
-            this.subscribeToSaveResponse(this.completeOrderService.update(this.completeOrder));
+            this.subscribeToSaveResponse(
+                this.completeOrderService.createEvent(new CompleteOrderEvent(this.completeOrder, 'COMPLETE_ORDER_UPDATED'))
+            );
         } else {
-            this.subscribeToSaveResponse(this.completeOrderService.create(this.completeOrder));
+            this.completeOrder.id = this.randomInt();
+            this.subscribeToSaveResponse(
+                this.completeOrderService.createEvent(new CompleteOrderEvent(this.completeOrder, 'COMPLETE_ORDER_CREATED'))
+            );
         }
     }
 
@@ -47,5 +53,9 @@ export class CompleteOrderUpdateComponent implements OnInit {
 
     private onSaveError() {
         this.isSaving = false;
+    }
+
+    private randomInt() {
+        return Math.floor(Math.random() * (10000 - 1 + 1)) + 1;
     }
 }

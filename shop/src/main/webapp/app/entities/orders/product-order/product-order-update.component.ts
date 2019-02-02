@@ -10,6 +10,7 @@ import { ICompleteOrder } from 'app/shared/model/orders/complete-order.model';
 import { CompleteOrderService } from 'app/entities/orders/complete-order';
 import { IBasket } from 'app/shared/model/orders/basket.model';
 import { BasketService } from 'app/entities/orders/basket';
+import { ProductOrderEvent } from 'app/shared/model/orders/product-order-event.model';
 
 @Component({
     selector: 'jhi-product-order-update',
@@ -57,9 +58,14 @@ export class ProductOrderUpdateComponent implements OnInit {
     save() {
         this.isSaving = true;
         if (this.productOrder.id !== undefined) {
-            this.subscribeToSaveResponse(this.productOrderService.update(this.productOrder));
+            this.subscribeToSaveResponse(
+                this.productOrderService.createEvent(new ProductOrderEvent(this.productOrder, 'PRODUCT_ORDER_UPDATED'))
+            );
         } else {
-            this.subscribeToSaveResponse(this.productOrderService.create(this.productOrder));
+            this.productOrder.id = this.randomInt();
+            this.subscribeToSaveResponse(
+                this.productOrderService.createEvent(new ProductOrderEvent(this.productOrder, 'PRODUCT_ORDER_CREATED'))
+            );
         }
     }
 
@@ -86,5 +92,9 @@ export class ProductOrderUpdateComponent implements OnInit {
 
     trackBasketById(index: number, item: IBasket) {
         return item.id;
+    }
+
+    private randomInt() {
+        return Math.floor(Math.random() * (10000 - 1 + 1)) + 1;
     }
 }

@@ -1,3 +1,4 @@
+import { BasketEvent } from './../../../shared/model/orders/basket-event.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -25,6 +26,16 @@ export class BasketDeleteDialogComponent {
             this.eventManager.broadcast({
                 name: 'basketListModification',
                 content: 'Deleted an basket'
+            });
+            this.activeModal.dismiss(true);
+        });
+    }
+
+    confirmDeleteEvent(basket: IBasket) {
+        this.basketService.createEvent(new BasketEvent(this.basket, 'BASKET_DELETED')).subscribe(response => {
+            this.eventManager.broadcast({
+                name: 'basketListModification',
+                content: 'Deleted a basket'
             });
             this.activeModal.dismiss(true);
         });

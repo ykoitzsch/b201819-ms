@@ -1,5 +1,5 @@
-import { ProductOrderEvent } from './../../../shared/model/orders/product-order-event.model';
-import { ProductOrder } from './../../../shared/model/orders/product-order.model';
+import { ProductOrderEvent } from '../../../shared/model/orders/product-order-event.model';
+import { ProductOrder } from '../../../shared/model/orders/product-order.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';

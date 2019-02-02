@@ -6,6 +6,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { IInvoice } from 'app/shared/model/invoices/invoice.model';
 import { InvoiceService } from './invoice.service';
+import { InvoiceEvent } from '../../../shared/model/invoices/invoice-event.model';
 
 @Component({
     selector: 'jhi-invoice-delete-dialog',
@@ -22,6 +23,16 @@ export class InvoiceDeleteDialogComponent {
 
     confirmDelete(id: number) {
         this.invoiceService.delete(id).subscribe(response => {
+            this.eventManager.broadcast({
+                name: 'invoiceListModification',
+                content: 'Deleted an invoice'
+            });
+            this.activeModal.dismiss(true);
+        });
+    }
+
+    confirmDeleteEvent(invoice: IInvoice) {
+        this.invoiceService.createEvent(new InvoiceEvent(this.invoice, 'INVOICE_DELETED')).subscribe(response => {
             this.eventManager.broadcast({
                 name: 'invoiceListModification',
                 content: 'Deleted an invoice'

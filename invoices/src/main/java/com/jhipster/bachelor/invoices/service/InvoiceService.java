@@ -1,15 +1,18 @@
 package com.jhipster.bachelor.invoices.service;
 
-import com.jhipster.bachelor.invoices.domain.Invoice;
-import com.jhipster.bachelor.invoices.repository.InvoiceRepository;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import com.jhipster.bachelor.invoices.domain.Invoice;
+
+import event.EventConsumer;
+import event.EventProducer;
+import event.InvoiceEvent;
 
 /**
  * Service Implementation for managing Invoice.
@@ -18,56 +21,38 @@ import java.util.Optional;
 @Transactional
 public class InvoiceService {
 
-    private final Logger log = LoggerFactory.getLogger(InvoiceService.class);
+  private final Logger log = LoggerFactory.getLogger(InvoiceService.class);
 
-    private InvoiceRepository invoiceRepository;
+  public InvoiceService() {
+  }
 
-    public InvoiceService(InvoiceRepository invoiceRepository) {
-        this.invoiceRepository = invoiceRepository;
-    }
+  public void addInvoiceEvent(InvoiceEvent invoiceEvent) {
+    EventProducer eventProducer = new EventProducer();
+    eventProducer.send(invoiceEvent);
+  }
 
-    /**
-     * Save a invoice.
-     *
-     * @param invoice the entity to save
-     * @return the persisted entity
-     */
-    public Invoice save(Invoice invoice) {
-        log.debug("Request to save Invoice : {}", invoice);
-        return invoiceRepository.save(invoice);
-    }
+  public List<Invoice> aggregateCustomerEvents() {
+    EventConsumer eventConsumer = new EventConsumer();
+    log.info("~aggregateInvoiceEvents");
+    List<Invoice> invoiceList = new ArrayList<>();
+    List<InvoiceEvent> invoiceEvents = eventConsumer.consume();
+    invoiceEvents.forEach(event -> {
+      if (event.getEvent().equals("INVOICE_CREATED")) {
+        invoiceList.add(event.getInvoice());
+      }
+      if (event.getEvent().equals("INVOICE_DELETED")) {
+        invoiceList.remove(event.getInvoice());
+      }
+      if (event.getEvent().equals("INVOICE_UPDATED")) {
+        for (int i = 0; i < invoiceList.size(); i++ ) {
+          if (invoiceList.get(i).getId().equals(event.getInvoice().getId())) {
+            invoiceList.set(i, event.getInvoice());
+          }
+        }
+      }
+    });
 
-    /**
-     * Get all the invoices.
-     *
-     * @return the list of entities
-     */
-    @Transactional(readOnly = true)
-    public List<Invoice> findAll() {
-        log.debug("Request to get all Invoices");
-        return invoiceRepository.findAll();
-    }
+    return invoiceList;
+  }
 
-
-    /**
-     * Get one invoice by id.
-     *
-     * @param id the id of the entity
-     * @return the entity
-     */
-    @Transactional(readOnly = true)
-    public Optional<Invoice> findOne(Long id) {
-        log.debug("Request to get Invoice : {}", id);
-        return invoiceRepository.findById(id);
-    }
-
-    /**
-     * Delete the invoice by id.
-     *
-     * @param id the id of the entity
-     */
-    public void delete(Long id) {
-        log.debug("Request to delete Invoice : {}", id);
-        invoiceRepository.deleteById(id);
-    }
 }

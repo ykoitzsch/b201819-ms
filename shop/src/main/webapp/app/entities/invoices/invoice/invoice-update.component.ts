@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { IInvoice } from 'app/shared/model/invoices/invoice.model';
 import { InvoiceService } from './invoice.service';
+import { InvoiceEvent } from '../../../shared/model/invoices/invoice-event.model';
 
 @Component({
     selector: 'jhi-invoice-update',
@@ -30,9 +31,10 @@ export class InvoiceUpdateComponent implements OnInit {
     save() {
         this.isSaving = true;
         if (this.invoice.id !== undefined) {
-            this.subscribeToSaveResponse(this.invoiceService.update(this.invoice));
+            this.subscribeToSaveResponse(this.invoiceService.createEvent(new InvoiceEvent(this.invoice, 'INVOICE_UPDATED')));
         } else {
-            this.subscribeToSaveResponse(this.invoiceService.create(this.invoice));
+            this.invoice.id = this.randomInt();
+            this.subscribeToSaveResponse(this.invoiceService.createEvent(new InvoiceEvent(this.invoice, 'INVOICE_CREATED')));
         }
     }
 
@@ -47,5 +49,9 @@ export class InvoiceUpdateComponent implements OnInit {
 
     private onSaveError() {
         this.isSaving = false;
+    }
+
+    private randomInt() {
+        return Math.floor(Math.random() * (10000 - 1 + 1)) + 1;
     }
 }

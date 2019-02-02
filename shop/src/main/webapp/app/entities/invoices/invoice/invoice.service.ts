@@ -1,3 +1,4 @@
+import { InvoiceEvent } from './../../../shared/model/invoices/invoice-event.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -12,11 +13,16 @@ type EntityArrayResponseType = HttpResponse<IInvoice[]>;
 @Injectable({ providedIn: 'root' })
 export class InvoiceService {
     public resourceUrl = SERVER_API_URL + 'invoices/api/invoices';
+    public eventUrl = SERVER_API_URL + 'invoices/api/events';
 
     constructor(private http: HttpClient) {}
 
     create(invoice: IInvoice): Observable<EntityResponseType> {
         return this.http.post<IInvoice>(this.resourceUrl, invoice, { observe: 'response' });
+    }
+
+    createEvent(event: InvoiceEvent): Observable<HttpResponse<any>> {
+        return this.http.post<InvoiceEvent>(`${this.eventUrl}/${event.event}`, event.invoice, { observe: 'response' });
     }
 
     update(invoice: IInvoice): Observable<EntityResponseType> {

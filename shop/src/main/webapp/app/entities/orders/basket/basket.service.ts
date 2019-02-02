@@ -1,5 +1,5 @@
-import { IBasket } from './../../../shared/model/orders/basket.model';
-import { BasketEvent } from './../../../shared/model/orders/basket-event.model';
+import { IBasket } from '../../../shared/model/orders/basket.model';
+import { BasketEvent } from '../../../shared/model/orders/basket-event.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';

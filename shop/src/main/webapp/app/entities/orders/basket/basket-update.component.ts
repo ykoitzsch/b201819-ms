@@ -33,7 +33,9 @@ export class BasketUpdateComponent implements OnInit {
         if (this.basket.id !== undefined) {
             this.subscribeToSaveResponse(this.basketService.createEvent(new BasketEvent(this.basket, 'BASKET_UPDATED')));
         } else {
-            this.basket.id = this.randomInt();
+            if (this.basket.customerId === undefined) {
+                this.basket.id = this.randomInt();
+            } else this.basket.id = this.basket.customerId;
             this.subscribeToSaveResponse(this.basketService.createEvent(new BasketEvent(this.basket, 'BASKET_CREATED')));
         }
     }

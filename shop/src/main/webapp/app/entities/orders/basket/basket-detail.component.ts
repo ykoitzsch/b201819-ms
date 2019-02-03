@@ -12,6 +12,7 @@ import { ProductService, ProductDeletePopupComponent } from '../../inventory/pro
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Product } from '../../../shared/model/inventory/product.model';
 import { OrderStatus } from '../../../shared/model/orders/complete-order.model';
+import { ProductOrderService } from '../product-order/product-order.service';
 
 class ProductDto {
     constructor(
@@ -40,7 +41,8 @@ export class BasketDetailComponent implements OnInit {
         private productService: ProductService,
         private jhiAlertService: JhiAlertService,
         private basketService: BasketService,
-        private completeOrderService: CompleteOrderService
+        private completeOrderService: CompleteOrderService,
+        private productOrderService: ProductOrderService
     ) {}
 
     ngOnInit() {
@@ -108,7 +110,7 @@ export class BasketDetailComponent implements OnInit {
             );
         }
     }
-
+    /*
     remove(productDto) {
         this.basket.productOrders.splice(this.basket.productOrders.indexOf(productDto.productOrder), 1);
         this.basketService.update(this.basket).subscribe(
@@ -122,5 +124,5 @@ export class BasketDetailComponent implements OnInit {
                 this.jhiAlertService.error(res.status + ': Could not delete productOrder with id ' + productDto.productOrder.id);
             }
         );
-    }
+    } */
 }

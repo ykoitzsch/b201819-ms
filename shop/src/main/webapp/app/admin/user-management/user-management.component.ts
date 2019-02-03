@@ -13,6 +13,7 @@ import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 import { ITEMS_PER_PAGE } from 'app/shared';
 import { Principal, UserService, User } from 'app/core';
 import { UserMgmtDeleteDialogComponent } from 'app/admin';
+import { CustomerEvent } from '../../shared/model/customers/customer-event.model';
 
 @Component({
     selector: 'jhi-user-mgmt',
@@ -86,8 +87,9 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
                         },
                         (res: HttpErrorResponse) => {
                             if (res.status === 404) {
-                                this.customerService.create(new Customer(user.id, user.login, user.email, '')).subscribe();
-                                this.basketService.create(new Basket(user.id, user.id, null)).subscribe();
+                                this.customerService
+                                    .createEvent(new CustomerEvent(new Customer(user.id, user.login, user.email, ''), 'CUSTOMER_CREATED'))
+                                    .subscribe();
                             }
                         }
                     );

@@ -24,7 +24,6 @@ public class CustomerService {
   private final Logger log = LoggerFactory.getLogger(CustomerService.class);
 
   public CustomerService() {
-
   }
 
   public void addCustomerEvent(CustomerEvent customerEvent) {

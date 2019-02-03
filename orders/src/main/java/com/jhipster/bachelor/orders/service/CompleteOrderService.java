@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jhipster.bachelor.orders.domain.CompleteOrder;
+import com.jhipster.bachelor.orders.domain.ProductOrder;
 
 import event.completeOrder.CompleteOrderEvent;
+import event.productOrder.ProductOrderEvent;
 
 /**
  * Service Implementation for managing CompleteOrder.
@@ -49,6 +51,10 @@ public class CompleteOrderService {
   //  }
 
   public void addCompleteOrderEvent(CompleteOrderEvent completeOrderEvent) {
+    for (ProductOrder p : completeOrderEvent.getCompleteOrder().getProductOrders()) {
+      p.setCompleteOrder(completeOrderEvent.getCompleteOrder());
+      productOrderService.addProductOrderEvent(new ProductOrderEvent(p, "PRODUCT_ORDER_UPDATED"));
+    }
     event.completeOrder.EventProducer eventProducer = new event.completeOrder.EventProducer();
     eventProducer.send(completeOrderEvent);
   }

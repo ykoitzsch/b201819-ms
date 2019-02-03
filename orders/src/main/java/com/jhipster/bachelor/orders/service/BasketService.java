@@ -5,12 +5,16 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.jhipster.bachelor.orders.domain.Basket;
-import com.jhipster.bachelor.orders.repository.ProductOrderRepository;
 
+import event.ConsumerChannel;
 import event.basket.BasketEvent;
 
 /**
@@ -22,10 +26,10 @@ public class BasketService {
 
   private final Logger log = LoggerFactory.getLogger(BasketService.class);
 
-  private ProductOrderRepository productOrderRepository;
+  private ProductOrderService productOrderService;
 
-  public BasketService(ProductOrderRepository productOrderRepository) {
-    this.productOrderRepository = productOrderRepository;
+  public BasketService(ProductOrderService productOrderService) {
+    this.productOrderService = productOrderService;
   }
 
   //
@@ -88,5 +92,16 @@ public class BasketService {
     });
 
     return basketList;
+  }
+
+  @StreamListener(ConsumerChannel.INPUT)
+  public void something(@Payload String payload) {
+    JsonObject obj = new JsonParser().parse(payload).getAsJsonObject();
+    if ("CUSTOMER_CREATED".equals(obj.get("event").getAsString())) {
+      Basket basket = new Basket();
+      basket.setId(obj.getAsJsonObject("customer").get("id").getAsLong());
+      basket.setCustomerId(obj.getAsJsonObject("customer").get("id").getAsLong());
+      addBasketEvent(new BasketEvent(basket, "BASKET_CREATED"));
+    }
   }
 }

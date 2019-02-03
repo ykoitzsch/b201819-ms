@@ -113,18 +113,7 @@ public class Customer implements Serializable {
 
   @Override
   public String toString() {
-    return "Customer{" +
-      "id=" +
-      getId() +
-      ", name='" +
-      getName() +
-      "'" +
-      ", email='" +
-      getEmail() +
-      "'" +
-      ", address='" +
-      getAddress() +
-      "'" +
-      "}";
+    return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", address=" + address + "]";
   }
+
 }

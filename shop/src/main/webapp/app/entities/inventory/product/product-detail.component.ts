@@ -1,3 +1,5 @@
+import { BasketEvent } from './../../../shared/model/orders/basket-event.model';
+import { ProductOrderService } from './../../orders/product-order/product-order.service';
 import { IRating } from './../../../shared/model/ratings/rating.model';
 import { RatingService } from '../../ratings/rating/rating.service';
 import { Rating } from '../../../shared/model/ratings/rating.model';
@@ -13,6 +15,7 @@ import { IProduct } from 'app/shared/model/inventory/product.model';
 import { BasketService } from '../../orders/basket';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { RatingEvent } from '../../../shared/model/ratings/rating-event.model';
+import { ProductOrderEvent } from '../../../shared/model/orders/product-order-event.model';
 
 @Component({
     selector: 'jhi-product-detail',
@@ -35,7 +38,8 @@ export class ProductDetailComponent implements OnInit {
         private accountService: AccountService,
         private basketService: BasketService,
         private jhiAlertService: JhiAlertService,
-        private ratingService: RatingService
+        private ratingService: RatingService,
+        private productOrderService: ProductOrderService
     ) {}
 
     ngOnInit() {
@@ -62,6 +66,7 @@ export class ProductDetailComponent implements OnInit {
         window.history.back();
     }
 
+    /**
     intoBasket(amount, product) {
         this.basketService.find(+this.account.id).subscribe(
             (res: HttpResponse<Basket>) => {
@@ -69,8 +74,10 @@ export class ProductDetailComponent implements OnInit {
                 if (this.basket.productOrders === null) {
                     this.basket.productOrders = [];
                 }
-                this.basket.productOrders.push(new ProductOrder(null, amount, +this.account.id, product.id, null, null));
-                this.basketService.update(this.basket).subscribe((r: HttpResponse<Basket>) => {
+                // this.basket.productOrders.push(new ProductOrder(null, amount, +this.account.id, product.id, null, null));
+                this.productOrderService.createEvent( new ProductOrderEvent(new ProductOrder(this.randomInt(), amount, +this.account.id, product.id, null, this.basket ),
+                'PRODUCT_ORDER_CREATED')).subscribe();
+                this.basketService.createEvent( new BasketEvent(this.basket, 'BASKET_UPDATED') ).subscribe((r: HttpResponse<Basket>) => {
                     this.jhiAlertService.success(amount + 'x ' + product.name + ' has successfully been added to your basket!');
                 });
             },
@@ -78,6 +85,17 @@ export class ProductDetailComponent implements OnInit {
                 this.jhiAlertService.error(res.status + ': No basket with id ' + this.account.id + ' found');
             }
         );
+    }*/
+
+    intoBasket(amount, product) {
+        this.productOrderService
+            .createEvent(
+                new ProductOrderEvent(
+                    new ProductOrder(this.randomInt(), amount, +this.account.id, product.id, null, null),
+                    'PRODUCT_ORDER_CREATED'
+                )
+            )
+            .subscribe();
     }
 
     textAreaEmpty() {

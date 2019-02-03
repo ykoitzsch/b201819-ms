@@ -1,3 +1,4 @@
+import { CompleteOrderEvent } from './../../../shared/model/orders/complete-order-event.model';
 import { Account } from './../../../core/user/account.model';
 import { AccountService } from './../../../core/auth/account.service';
 import { InvoiceService } from './../../invoices/invoice/invoice.service';
@@ -73,6 +74,7 @@ export class CompleteOrderOverviewComponent implements OnInit, OnDestroy {
         }
     }
 
+    /*
     payNow(order) {
         this.invoice = new Invoice();
         this.invoice.amount = order.totalPrice;
@@ -101,7 +103,16 @@ export class CompleteOrderOverviewComponent implements OnInit, OnDestroy {
             }
         );
     }
+    */
 
+    payNow(order) {
+        order.status = OrderStatus.COMPLETED;
+        this.completeOrderService.createEvent(new CompleteOrderEvent(order, 'COMPLETE_ORDER_UPDATED')).subscribe((r: HttpResponse<any>) => {
+            this.jhiAlertService.success('Order with order number ' + this.generateOrderNo(order) + ' has been paid');
+        });
+    }
+
+    /*
     generateInvoiceCode(): string {
         return 'xxxxxxxx'.replace(/[xy]/g, char => {
             const random = Math.random() * 16;
@@ -114,7 +125,8 @@ export class CompleteOrderOverviewComponent implements OnInit, OnDestroy {
         const date = new Date();
         date.setMonth(date.getMonth() + 1);
         return date.toDateString();
-    }
+    }*/
+
     hide(order) {
         this.completeOrders.splice(this.completeOrders.indexOf(order), 1);
     }

@@ -25,6 +25,27 @@ public class ProductOrderService {
   }
 
   public void addProductOrderEvent(ProductOrderEvent productOrderEvent) {
+    //    if (productOrderEvent.getProductOrder().getCustomerId() != null) {
+    //      if (productOrderEvent.getEvent().equals("PRODUCT_ORDER_CREATED")) {
+    //        long basketId = productOrderEvent.getProductOrder().getCustomerId();
+    //        Basket basket = basketService.aggregateBasketEvents().stream().filter(b -> b.getId().equals(basketId)).findFirst().get();
+    //        basket.addProductOrder(productOrderEvent.getProductOrder());
+    //        basketService.addBasketEvent(new BasketEvent(basket, "BASKET_UPDATED"));
+    //      }
+    //      if (productOrderEvent.getEvent().equals("PRODUCT_ORDER_DELETED")) {
+    //        long basketId = productOrderEvent.getProductOrder().getCustomerId();
+    //        Basket basket = basketService.aggregateBasketEvents().stream().filter(b -> b.getId().equals(basketId)).findFirst().get();
+    //        basket.removeProductOrder(productOrderEvent.getProductOrder());
+    //        basketService.addBasketEvent(new BasketEvent(basket, "BASKET_UPDATED"));
+    //      }
+    //      if (productOrderEvent.getEvent().equals("PRODUCT_ORDER_UPDATED")) {
+    //        long basketId = productOrderEvent.getProductOrder().getCustomerId();
+    //        Basket basket = basketService.aggregateBasketEvents().stream().filter(b -> b.getId().equals(basketId)).findFirst().get();
+    //        basket.getProductOrders().remove(productOrderEvent.getProductOrder())
+    //        }
+    //        basketService.addBasketEvent(new BasketEvent(basket, "BASKET_UPDATED"));
+    //      }
+
     event.productOrder.EventProducer eventProducer = new event.productOrder.EventProducer();
     eventProducer.send(productOrderEvent);
   }

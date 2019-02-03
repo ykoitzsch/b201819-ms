@@ -38,19 +38,18 @@ public class EventResource {
 
   @PostMapping("/productOrder-events/{event}")
   @Timed
-  public ResponseEntity<Object> addCustomerEvent(@RequestBody ProductOrder productOrder, @PathVariable("event") String event)
+  public ResponseEntity<Object> addProductOrderEvent(@RequestBody ProductOrder productOrder, @PathVariable("event") String event)
       throws Exception {
     if ("PRODUCT_ORDER_DELETED".equals(event) || "PRODUCT_ORDER_UPDATED".equals(event) || "PRODUCT_ORDER_CREATED".equals(event)) {
       productOrderService.addProductOrderEvent(new ProductOrderEvent(productOrder, event));
     } else
       throw new Exception("Unknown Event");
     return new ResponseEntity<>(HttpStatus.OK);
-
   }
 
   @PostMapping("/completeOrder-events/{event}")
   @Timed
-  public ResponseEntity<Object> addCustomerEvent(@RequestBody CompleteOrder completeOrder, @PathVariable("event") String event)
+  public ResponseEntity<Object> addCompleteOrderEvent(@RequestBody CompleteOrder completeOrder, @PathVariable("event") String event)
       throws Exception {
     if ("COMPLETE_ORDER_DELETED".equals(event) || "COMPLETE_ORDER_UPDATED".equals(event) || "COMPLETE_ORDER_CREATED".equals(event)) {
       completeOrderService.addCompleteOrderEvent(new CompleteOrderEvent(completeOrder, event));
@@ -61,13 +60,12 @@ public class EventResource {
 
   @PostMapping("/basket-events/{event}")
   @Timed
-  public ResponseEntity<Object> addCustomerEvent(@RequestBody Basket basket, @PathVariable("event") String event) throws Exception {
+  public ResponseEntity<Object> addBasketEvent(@RequestBody Basket basket, @PathVariable("event") String event) throws Exception {
     if ("BASKET_DELETED".equals(event) || "BASKET_UPDATED".equals(event) || "BASKET_CREATED".equals(event)) {
       basketService.addBasketEvent(new BasketEvent(basket, event));
     } else
       throw new Exception("Unknown Event");
     return new ResponseEntity<>(HttpStatus.OK);
-
   }
 
 }

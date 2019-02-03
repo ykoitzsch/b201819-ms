@@ -1,3 +1,4 @@
+import { CompleteOrderEvent } from './../../../shared/model/orders/complete-order-event.model';
 import { User } from '../../../core/user/user.model';
 import { Subscription } from 'rxjs';
 import { AccountService, Principal } from 'app/core';
@@ -14,6 +15,8 @@ import { ProductService, ProductDeletePopupComponent } from '../../inventory/pro
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Product } from '../../../shared/model/inventory/product.model';
 import { OrderStatus } from '../../../shared/model/orders/complete-order.model';
+import { ProductOrderService } from 'app/entities/orders/product-order';
+import { ProductOrderEvent } from 'app/shared/model/orders/product-order-event.model';
 
 class ProductDto {
     constructor(
@@ -43,7 +46,8 @@ export class MyBasketComponent implements OnInit {
         private jhiAlertService: JhiAlertService,
         private basketService: BasketService,
         private completeOrderService: CompleteOrderService,
-        private accountService: AccountService
+        private accountService: AccountService,
+        private productOrderService: ProductOrderService
     ) {}
 
     ngOnInit() {
@@ -65,6 +69,36 @@ export class MyBasketComponent implements OnInit {
         window.history.back();
     }
 
+    orderNow() {
+        if (this.products.length > 0) {
+            this.completeOrderService
+                .createEvent(
+                    new CompleteOrderEvent(
+                        new CompleteOrder(
+                            this.randomInt(),
+                            null,
+                            OrderStatus.PENDING,
+                            this.basket.customerId,
+                            this.totalPrice,
+                            new Date(),
+                            this.basket.productOrders
+                        ),
+                        'COMPLETE_ORDER_CREATED'
+                    )
+                )
+                .subscribe((res: HttpResponse<any>) => {
+                    this.products = [];
+                    this.totalProducts = 0;
+                    this.totalPrice = 0.0;
+                });
+        }
+    }
+
+    private randomInt() {
+        return Math.floor(Math.random() * (10000 - 1 + 1)) + 1;
+    }
+
+    /*
     orderNow() {
         if (this.products.length > 0) {
             this.completeOrderService
@@ -90,7 +124,7 @@ export class MyBasketComponent implements OnInit {
                     }
                 );
         }
-    }
+    } */
 
     loadAllProducts() {
         this.totalProducts = 0;
@@ -120,6 +154,7 @@ export class MyBasketComponent implements OnInit {
         }
     }
 
+    /*
     remove(productDto) {
         this.basket.productOrders.splice(this.basket.productOrders.indexOf(productDto.productOrder), 1);
         this.basketService.update(this.basket).subscribe(
@@ -133,5 +168,16 @@ export class MyBasketComponent implements OnInit {
                 this.jhiAlertService.error(res.status + ': Could not delete productOrder with id ' + productDto.productOrder.id);
             }
         );
+    } */
+
+    remove(productDto) {
+        this.productOrderService
+            .createEvent(new ProductOrderEvent(productDto.productOrder, 'PRODUCT_ORDER_DELETED'))
+            .subscribe((res: HttpResponse<any>) => {
+                this.products.splice(this.products.indexOf(productDto), 1);
+                this.jhiAlertService.success(productDto.name + ' has been removed from the basket');
+                this.totalProducts = this.totalProducts - productDto.amount;
+                this.totalPrice = this.totalPrice - productDto.amount * productDto.price;
+            });
     }
 }

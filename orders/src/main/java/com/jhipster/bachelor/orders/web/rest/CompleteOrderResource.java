@@ -1,6 +1,7 @@
 package com.jhipster.bachelor.orders.web.rest;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,10 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.jhipster.bachelor.orders.domain.CompleteOrder;
+import com.jhipster.bachelor.orders.security.SecurityUtils;
 import com.jhipster.bachelor.orders.service.CompleteOrderService;
 
 import io.github.jhipster.web.util.ResponseUtil;
@@ -24,8 +27,6 @@ import io.github.jhipster.web.util.ResponseUtil;
 public class CompleteOrderResource {
 
   private final Logger log = LoggerFactory.getLogger(CompleteOrderResource.class);
-
-  private static final String ENTITY_NAME = "ordersCompleteOrder";
 
   private CompleteOrderService completeOrderService;
 
@@ -44,16 +45,23 @@ public class CompleteOrderResource {
     return completeOrderService.aggregateCompleteOrderEvents();
   }
 
-  //  @GetMapping("/my-orders")
-  //  @Timed
-  //  public ResponseEntity<List<CompleteOrder>> getCompleteOrdersByCustomerId(
-  //      @RequestParam(value = "customerId", required = true) String customerId,
-  //      @RequestParam(value = "login", required = true) String login) {
-  //    if ( !login.equals(SecurityUtils.getCurrentUserLogin().get())) {
-  //      return ResponseEntity.status(401).build();
-  //    }
-  //    return ResponseEntity.ok().body(completeOrderService.findByCustomerId(customerId));
-  //  }
+  @GetMapping("/my-orders")
+  @Timed
+  public ResponseEntity<List<CompleteOrder>> getCompleteOrdersByCustomerId(
+      @RequestParam(value = "customerId", required = true) String customerId,
+      @RequestParam(value = "login", required = true) String login) {
+    if ( !login.equals(SecurityUtils.getCurrentUserLogin().get())) {
+      return ResponseEntity.status(401).build();
+    }
+    return ResponseEntity
+      .ok()
+      .body(
+        completeOrderService
+          .aggregateCompleteOrderEvents()
+          .stream()
+          .filter(c -> String.valueOf(c.getCustomerId()).equals(customerId))
+          .collect(Collectors.toList()));
+  }
 
   /**
    * GET /complete-orders/:id : get the "id" completeOrder.

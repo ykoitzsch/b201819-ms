@@ -34,7 +34,6 @@ export class CompleteOrderOverviewComponent implements OnInit, OnDestroy {
         private eventManager: JhiEventManager,
         private principal: Principal,
         private productService: ProductService,
-        private invoiceService: InvoiceService,
         private accountService: AccountService
     ) {}
 
@@ -106,6 +105,7 @@ export class CompleteOrderOverviewComponent implements OnInit, OnDestroy {
     */
 
     payNow(order) {
+        console.log(order);
         order.status = OrderStatus.COMPLETED;
         this.completeOrderService.createEvent(new CompleteOrderEvent(order, 'COMPLETE_ORDER_UPDATED')).subscribe((r: HttpResponse<any>) => {
             this.jhiAlertService.success('Order with order number ' + this.generateOrderNo(order) + ' has been paid');

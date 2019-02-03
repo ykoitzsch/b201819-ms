@@ -27,6 +27,16 @@ eureka:
             defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
 
 spring:
+    cloud:
+        stream:
+            kafka:
+                binder:
+                    brokers: localhost:9092
+                    zk-nodes: localhost
+            bindings:
+                consumerChannel:
+                    destination: completeOrder.topics
+                    contentType: application/json
     profiles:
         active: dev
         include:

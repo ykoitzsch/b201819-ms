@@ -37,6 +37,9 @@ spring:
                 consumerChannel:
                     destination: c.topics
                     contentType: application/json
+                consumerChannelT:
+                    destination: invoice.topics
+                    contentType: application/json
     profiles:
         active: dev
         include:

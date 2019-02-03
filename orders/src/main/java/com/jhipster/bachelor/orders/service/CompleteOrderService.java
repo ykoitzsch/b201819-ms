@@ -5,12 +5,17 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.jhipster.bachelor.orders.domain.CompleteOrder;
 import com.jhipster.bachelor.orders.domain.ProductOrder;
 
+import event.ConsumerChannelT;
 import event.completeOrder.CompleteOrderEvent;
 import event.productOrder.ProductOrderEvent;
 
@@ -81,5 +86,18 @@ public class CompleteOrderService {
     });
 
     return completeOrderList;
+  }
+
+  @StreamListener(ConsumerChannelT.INPUT)
+  public void something(@Payload String payload) {
+    JsonObject obj = new JsonParser().parse(payload).getAsJsonObject();
+    if ("INVOICE_CREATED".equals(obj.get("event").getAsString())) {
+      log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      long invoiceId = obj.getAsJsonObject("invoice").get("id").getAsLong();
+      long orderId = obj.getAsJsonObject("invoice").get("orderId").getAsLong();
+      CompleteOrder co = aggregateCompleteOrderEvents().stream().filter(c -> c.getId().equals(orderId)).findFirst().get();
+      co.setInvoiceId(invoiceId);
+      addCompleteOrderEvent(new CompleteOrderEvent(co, "COMPLETE_ORDER_UPDATED"));
+    }
   }
 }

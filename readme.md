@@ -27,7 +27,7 @@ Start the registry
 $ cd jhipster-registry
 $ mvnw (or ./mvnw with linux)
 ```
-This application is using Kafka as an event store. Therefore kafka and docker has to be started. After docker is running you can run kafka with:
+This application is using Kafka as an event store. Therefore kafka and docker has to be started. After docker is running you can run kafka with: (it is rare but it can happen that starting kafka fails, then just try again until there is no error message :))
 ```sh
 $ docker-compose -f kafka.yml up
 ```

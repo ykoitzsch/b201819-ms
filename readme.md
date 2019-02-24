@@ -12,6 +12,9 @@ There are a total of 5 microservices which are:
 ### Requirements
  - Java 1.8+
  - NPM (version used in development is 6.4.1) (optional)
+ - docker-compose (tested with v1.2.3)
+ - docker (testd with v18.09)
+ 
 ### Installation
 
 First clone the JHipster Registry from their repository https://github.com/jhipster/jhipster-registry
@@ -24,6 +27,11 @@ Start the registry
 $ cd jhipster-registry
 $ mvnw (or ./mvnw with linux)
 ```
+This application is using Kafka as an event store. Therefore kafka and docker has to be started. After docker is running you can run kafka with:
+```sh
+$ docker-compose -f kafka.yml up
+```
+
 After the JHipster Registry is running you can start the API Gateway and the microservices. It is recommended to start the API Gateway first.
 ```sh
 $ cd shop

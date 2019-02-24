@@ -27,10 +27,11 @@ Start the registry
 $ cd jhipster-registry
 $ mvnw (or ./mvnw with linux)
 ```
-This application is using Kafka as an event store. Therefore kafka and docker has to be started. After docker is running you can run kafka with: (it is rare but it can happen that starting kafka fails, then just try again until there is no error message :))
+This application is using Kafka as an event store. Therefore kafka and docker has to be started. After docker is running you can run kafka with:
 ```sh
 $ docker-compose -f kafka.yml up
 ```
+(it is rare but it can happen that starting kafka fails, then just try again until there is no error message )
 
 After the JHipster Registry is running you can start the API Gateway and the microservices. It is recommended to start the API Gateway first.
 ```sh

@@ -33,7 +33,7 @@ $ docker-compose -f kafka.yml up
 ```
 (it is rare but it can happen that starting kafka fails, then just try again until there is no error message )
 
-After the JHipster Registry is running you can start the API Gateway and the microservices. It is recommended to start the API Gateway first.
+After the JHipster Registry and Kafka is running you can start the API Gateway and the microservices. It is recommended to start the API Gateway first.
 ```sh
 $ cd shop
 $ mvnw (or ./mvnw with linux)

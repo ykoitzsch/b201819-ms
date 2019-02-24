@@ -13,7 +13,7 @@ There are a total of 5 microservices which are:
  - Java 1.8+
  - NPM (version used in development is 6.4.1) (optional)
  - docker-compose (tested with v1.2.3)
- - docker (testd with v18.09)
+ - docker (tested with v18.09)
  
 ### Installation
 

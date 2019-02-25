@@ -37,7 +37,7 @@ After the JHipster Registry and Kafka is running you can start the API Gateway a
 ```sh
 $ cd shop
 $ mvnw (or ./mvnw with linux)
-$ npm start (optional)
+$ npm start
 ```
 
 Start the microservices
@@ -48,7 +48,7 @@ $ mvnw (or ./mvnw with linux)
 
 ### Setup
 (Admin)
- - Once the application is running you can access it at http://localhost:8080 or http://localhost:9000. The latter if you used npm start.
+ - Once the application is running you can access it at http://localhost:9000.
  - Login as admin/admin
  - Create product categories
  - Create products and link them to categories
